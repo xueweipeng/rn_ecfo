@@ -93,7 +93,7 @@ export default class Me extends Component {
                 </View>
                 <ScrollView>
                 {Platform.OS === 'android' ?
-                    <TouchableNativeFeedback onPress={this._onPressCallback.bind(this, 0)}>
+                    <TouchableOpacity onPress={this._onPressCallback.bind(this, 0)}>
                         <View style={styles.intro}>
                             <Avatar image={require('../image/logo_og.png')} size={px2dp(55)} textSize={px2dp(20)}/>
                             <View style={{marginLeft: px2dp(12)}}>
@@ -104,7 +104,7 @@ export default class Me extends Component {
                                 <Icon name="ios-arrow-forward" color="#ccc" size={px2dp(30)}/>
                             </View>
                         </View>
-                    </TouchableNativeFeedback>
+                    </TouchableOpacity>
                     :
                     <TouchableOpacity onPress={this._onPressCallback.bind(this, 0)} activeOpacity={theme.btnActiveOpacity}>
                         <View style={styles.intro}>
@@ -152,7 +152,7 @@ class Item extends Component{
 
         if(Platform.OS === 'android'){
             return(
-                <TouchableNativeFeedback onPress={onPress}>
+                <TouchableOpacity onPress={onPress}>
                     <View style={styles.listItem}>
                         <Icon name={icon} size={px2dp(22)} color={iconColor}/>
                         <Text style={{color: 'black', fontSize: px2dp(15), marginLeft: px2dp(20)}}>{text}</Text>
@@ -160,7 +160,7 @@ class Item extends Component{
                             <Text style={{color: "#ccc"}}>{subText}</Text>
                         </View>
                     </View>
-                </TouchableNativeFeedback>
+                </TouchableOpacity>
             );
         }else if(Platform.OS === 'ios'){
             return(
