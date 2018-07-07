@@ -27,6 +27,7 @@ import px2dp from '../util/px2dp'
 import Avatar from '../component/Avatar'
 
 
+
 export default class Me extends Component {
 	constructor(props){
         super(props);

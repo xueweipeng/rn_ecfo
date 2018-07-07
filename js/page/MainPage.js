@@ -19,30 +19,6 @@ import px2dp from '../util/px2dp'
 
 
 export default class MainPage extends Component {
-    // constructor(props){
-    //     super(props);
-    //     MainScene.switchToWebViewPage = MainScene.switchToWebViewPage.bind(this);
-    //     MainScene.switchToIndividualPage = MainScene.switchToIndividualPage.bind(this);
-    // }
-
-    // static switchToWebViewPage(rowData){
-    //     this.props.navigator.push({
-    //         component: WebViewPage,
-    //         args: {rowData: rowData}
-    //     });
-    // }
-
-    // static switchToIndividualPage(userInfo){
-    //     this.props.navigator.push({
-    //         component: IndividualPage,
-    //         args: {user: userInfo}
-    //     });
-    // }
-
-    // componentDidMount(){
-    //     if(Platform.OS === 'android')
-    //         SplashScreen.hide();
-    // }
     state = {
         selectedTab: 'lesson'
     };
@@ -71,7 +47,7 @@ export default class MainPage extends Component {
                     renderIcon={() => <Icon name="book" size={px2dp(22)} color="#666" />}
                     renderSelectedIcon={() => <Icon name="book" size={px2dp(22)} color="#3496f0" />}
                     onPress={() => this.setState({ selectedTab: 'lesson' })}>
-                    <Lesson />
+                    {<Lesson navigator={this.props.navigator}/>}
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'me'}
@@ -80,7 +56,7 @@ export default class MainPage extends Component {
                     renderIcon={() => <Icon name="user" size={px2dp(22)} color="#666" />}
                     renderSelectedIcon={() => <Icon name="user" size={px2dp(22)} color="#3496f0" />}
                     onPress={() => this.setState({ selectedTab: 'me' })}>
-                    <Me />
+                    {<Me navigator={this.props.navigator}/>}
                 </TabNavigator.Item>
             </TabNavigator>
         );

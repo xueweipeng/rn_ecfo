@@ -6,7 +6,7 @@ import MainPage from './js/page/MainPage';
 export default class ecfoApp extends Component {
   render() {
       return (
-          <MainPage />
+          <MainPage navigator={this.props.navigator}/>
       );
   }
 }
