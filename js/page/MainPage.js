@@ -23,6 +23,10 @@ export default class MainPage extends Component {
         selectedTab: 'lesson'
     };
 
+    static navigatorStyle = {
+        navBarHidden: true,
+    };
+
     _backAndroidHandler() {
         if (Platform.OS === 'android') {
             if (this.lastBackPressed && this.lastBackPressed + 2000 >= Date.now()) {
@@ -47,7 +51,7 @@ export default class MainPage extends Component {
                     renderIcon={() => <Icon name="book" size={px2dp(22)} color="#666" />}
                     renderSelectedIcon={() => <Icon name="book" size={px2dp(22)} color="#3496f0" />}
                     onPress={() => this.setState({ selectedTab: 'lesson' })}>
-                    {<Lesson navigator={this.props.navigator}/>}
+                    {<Lesson navigator={this.props.navigator} />}
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'me'}
@@ -56,7 +60,7 @@ export default class MainPage extends Component {
                     renderIcon={() => <Icon name="user" size={px2dp(22)} color="#666" />}
                     renderSelectedIcon={() => <Icon name="user" size={px2dp(22)} color="#3496f0" />}
                     onPress={() => this.setState({ selectedTab: 'me' })}>
-                    {<Me navigator={this.props.navigator}/>}
+                    {<Me navigator={this.props.navigator} />}
                 </TabNavigator.Item>
             </TabNavigator>
         );
