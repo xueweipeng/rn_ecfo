@@ -39,7 +39,8 @@ export default class Me extends Component {
         switch (position) {
             case 0:  //title
                 this.props.navigator.push({
-                    screen: 'Personal'
+                    screen: 'Personal',
+                    title: '我的'
                 });
                 break;
 

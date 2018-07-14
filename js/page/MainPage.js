@@ -24,7 +24,7 @@ export default class MainPage extends Component {
     };
 
     static navigatorStyle = {
-        navBarHidden: true,
+        navBarHidden: true, //隐藏系统导航栏
     };
 
     _backAndroidHandler() {
@@ -60,7 +60,8 @@ export default class MainPage extends Component {
                     renderIcon={() => <Icon name="user" size={px2dp(22)} color="#666" />}
                     renderSelectedIcon={() => <Icon name="user" size={px2dp(22)} color="#3496f0" />}
                     onPress={() => this.setState({ selectedTab: 'me' })}>
-                    {<Me navigator={this.props.navigator} />}
+                    {/* <将导航组件对象设置给使用该对象的组件/> */}
+                    {<Me navigator={this.props.navigator} />} 
                 </TabNavigator.Item>
             </TabNavigator>
         );
