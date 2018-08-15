@@ -3,7 +3,7 @@ package com.ecfo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
+//import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -39,7 +39,7 @@ public class MainApplication extends NavigationApplication implements ReactAppli
     // No need to add RnnPackage and MainReactPackage
     return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
-          // new SplashScreenReactPackage(),
+        // new SplashScreenReactPackage(),
         new ReactVideoPackage(), 
         new VectorIconsPackage()
     );
