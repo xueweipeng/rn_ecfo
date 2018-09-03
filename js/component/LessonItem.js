@@ -28,7 +28,7 @@ export default class LessonItem extends Component{
         return (
             <TouchableOpacity
                 onPress={this.props.onPress}>
-                <View style={{height: px2dp(16)}}>
+                <View style={{height: px2dp(16),flex: 1, flexDirection: 'row'}}>
                     <Text style={{fontSize:this.props.fontSize, color: this.props.color}}>{this.props.text}</Text>
                 </View>
             </TouchableOpacity>

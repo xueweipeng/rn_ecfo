@@ -54,7 +54,7 @@ export default class Lesson extends Component {
 
 	_renderListView() {
 		var data = [];
-		for (var i = 0; i < 100; i++) {
+		for (var i = 0; i < 5; i++) {
 			data.push({ key: i, title: i + '', content: 'good' });
 		}
 		if (!this.state.refreshing || this.state.loadedData) {
@@ -89,10 +89,15 @@ export default class Lesson extends Component {
 		return (
 			<TouchableOpacity
 				onPress={this._onItemClick.bind(this, item)}>
-				<View style={{ flex: 80 }}>
-					{/* {在这里设置item布局样式} */}
-					<Text style={[{ flex: 1, backgroundColor: bgColor }, styles.txt]}>{txt}</Text>
+				<View style={{flex: 1, flexDirection: 'row'}}>
+					<Image source={ require('../image/logo_og.png') } style={{ width: 70, height: 100, marginRight: 10}}></Image>
+					<View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems:'stretch'}}>
+						<Text style={styles.title}>title</Text>
+						<Text style={styles.con}>content</Text>
+						<Text style={styles.con}>content</Text>
+					</View>
 				</View>
+				
 			</TouchableOpacity>
 		)
 	}
@@ -184,6 +189,18 @@ const styles = StyleSheet.create({
 		textAlign: 'left',
 		textAlignVertical: 'center',
 		color: 'black',
+		fontSize: 30,
+	},
+	title: {
+		textAlign: 'left',
+		textAlignVertical: 'center',
+		color: 'black',
+		fontSize: 40,
+	},
+	content: {
+		textAlign: 'left',
+		textAlignVertical: 'center',
+		color: 'gray',
 		fontSize: 30,
 	}
 });
