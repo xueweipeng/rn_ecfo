@@ -40,7 +40,7 @@ export default class Me extends Component {
             case 0:  //title
                 this.props.navigator.push({
                     screen: 'Personal',
-                    title: '我的'
+                    title: '我的',
                 });
                 break;
 
@@ -53,7 +53,10 @@ export default class Me extends Component {
                 break;
 
             case 3:  //read articles
-                this._alert();
+                this.props.navigator.push({
+                    screen: 'Personal',
+                    title: '我的',
+                });
                 break;
 
             case 4:  //tags
@@ -99,7 +102,7 @@ export default class Me extends Component {
                             <View style={styles.intro}>
                                 <Avatar image={require('../image/logo_og.png')} size={px2dp(55)} textSize={px2dp(20)} />
                                 <View style={{ marginLeft: px2dp(12) }}>
-                                    <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>React_Native</Text>
+                                    <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>android</Text>
                                     <TextButton text="添加职位 @添加公司" color="#949494" fontSize={px2dp(13)} onPress={this._onPressCallback.bind(this, 1)} />
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
