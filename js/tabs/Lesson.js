@@ -103,7 +103,11 @@ export default class Lesson extends Component {
 	}
 
 	_onItemClick = (item) => {
-		this._alert(item.index);
+		// this._alert(item.index);
+		this.props.navigator.push({
+			screen: 'LessonPage',
+			title: '课程详情'
+		});
 	}
 
 	_alert(index) {
