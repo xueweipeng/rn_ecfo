@@ -27,7 +27,7 @@ export default class PlayerPage extends Component {
         this.state = {
             songs: [],   //歌曲id数据源
             playModel:1,  // 播放模式  1:列表循环    2:随机    3:单曲循环
-            btnModel:require('./image/列表循环.png'), //播放模式按钮背景图
+            btnModel:require('../image/list_loop.png'), //播放模式按钮背景图
             pic_small:'',    //小图
             pic_big:'',      //大图
             file_duration:0,    //歌曲长度
@@ -41,7 +41,7 @@ export default class PlayerPage extends Component {
             currentTime: 0.0,   //当前时间
             duration: 0.0,     //歌曲时间
             currentIndex:0,    //当前第几首
-            isplayBtn:require('./image/播放.png'),  //播放/暂停按钮背景图
+            isplayBtn:require('../image/pause.png'),  //播放/暂停按钮背景图
             imgRotate: new Animated.Value(0),
         }
         this.myAnimate = Animated.timing(this.state.imgRotate, {
@@ -50,4 +50,57 @@ export default class PlayerPage extends Component {
             easing: Easing.inOut(Easing.linear),
         });
     }
+
+    render(){
+        return(
+            <View style={{flex: 1, flexDirection:'column'}}>
+                {/*Android下必须有控件才能跳转*/}
+                {/* <NavigationBar title="个人主页" backOnPress={this._handleBack.bind(this)}/> */}
+                <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>播放页面</Text>
+                <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>{this.props.lessonTitle}</Text>
+            </View>
+        );
+    }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    image: {
+        flex: 1
+    },
+    playingControl: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingTop: 10,
+        paddingLeft: 20,
+        paddingRight: 20,
+        paddingBottom: 20
+    },
+    playingInfo: {
+        flexDirection: 'row',
+        alignItems:'stretch',
+        justifyContent: 'space-between',
+        paddingTop: 40,
+        paddingLeft: 20,
+        paddingRight: 20,
+        backgroundColor:'rgba(255,255,255,0.0)'
+    },
+    text: {
+        color: "black",
+        fontSize: 22
+    },
+    modal: {
+        height: 300,
+        borderTopLeftRadius: 5,
+        borderTopRightRadius: 5,
+        paddingTop: 5,
+        paddingBottom: 50
+    },
+    itemStyle: {
+        paddingTop: 20,
+        height:25,
+        backgroundColor:'rgba(255,255,255,0.0)',
+    }
+})

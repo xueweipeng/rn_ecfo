@@ -72,11 +72,15 @@ export default class LessonPage extends Component {
     }
 
     _onItemClick = (item) => {
-		this._alert(item.index);
-		// this.props.navigator.push({
-		// 	screen: 'LessonPage',
-		// 	title: '课程详情'
-		// });
+		// this._alert(item.index);
+		this.props.navigator.push({
+			screen: 'Player',
+            title: '',
+            passProps: {
+                lessonId: item.index,
+                lessonTitle: item.item.title
+                }
+		});
     }
     
     _alert(index) {
