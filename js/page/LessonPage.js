@@ -78,7 +78,8 @@ export default class LessonPage extends Component {
             title: '',
             passProps: {
                 lessonId: item.index,
-                lessonTitle: item.item.title
+                lessonTitle: item.item.title,
+                lessonUrl: item.item.url
                 }
 		});
     }
@@ -106,14 +107,14 @@ export default class LessonPage extends Component {
     render() {
         var data = [];
         for (var i = 0; i < 5; i++) {
-            data.push({ key: i, title: '第' + i + '课' });
+            data.push({ key: i, title: '第' + i + '课', url: 'http://media.ecfo.cn/43c7b66fvodtransgzp1251278716/a591cd155285890781446982370/v.f210.m3u8' });
         }
         if (!this.state.refreshing || this.state.loadedData) {
             return (
                 <View style={{ flex: 1 }}>
                     <FlatList
                         ref={(flatList) => this._flatList = flatList}
-                        ListHeaderComponent={this._header}
+                        ListHeaderComponent={this._header} 
                         keyExtractor={(item, index) => '' + index}
                         data={data}
                         ItemSeparatorComponent={this._separator}

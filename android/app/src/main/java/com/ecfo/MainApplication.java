@@ -3,6 +3,10 @@ package com.ecfo;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.brentvatne.react.ReactVideoPackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import org.devio.rn.splashscreen.SplashScreenReactPackage;
+import com.reactnativenavigation.NavigationReactPackage;
 //import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.facebook.react.ReactNativeHost;
@@ -39,6 +43,10 @@ public class MainApplication extends NavigationApplication implements ReactAppli
     // No need to add RnnPackage and MainReactPackage
     return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new ReactVideoPackage(),
+            new VectorIconsPackage(),
+            new SplashScreenReactPackage(),
+            new NavigationReactPackage(),
         // new SplashScreenReactPackage(),
         new ReactVideoPackage(), 
         new VectorIconsPackage()

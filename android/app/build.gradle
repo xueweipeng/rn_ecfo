@@ -138,6 +138,10 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-video')
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-splash-screen')
+    compile project(':react-native-navigation')
     api fileTree(dir: "libs", include: ["*.jar"])
     api "com.android.support:appcompat-v7:25.0.1"
     api "com.facebook.react:react-native:+"  // From node_modules

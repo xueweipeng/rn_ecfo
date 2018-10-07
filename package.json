@@ -19,7 +19,7 @@
     "react-native-swiper": "^1.5.3",
     "react-native-tab-navigator": "^0.3.4",
     "react-native-vector-icons": "^4.6.0",
-    "react-native-video": "^2.3.1",
+    "react-native-video": "^3.2.1",
     "react-native-viewpager": "^0.2.13",
     "react-redux": "^5.0.7",
     "react-swipeable-views-native": "^0.12.1",

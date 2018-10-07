@@ -4312,9 +4312,9 @@ react-native-vector-icons@^4.6.0:
     prop-types "^15.5.10"
     yargs "^8.0.2"
 
-react-native-video@^2.3.1:
-  version "2.3.1"
-  resolved "http://registry.npm.taobao.org/react-native-video/download/react-native-video-2.3.1.tgz#d0df6f984945a67a0cbfc5ad45a5156e2472ccce"
+react-native-video@^3.2.1:
+  version "3.2.1"
+  resolved "http://registry.npm.taobao.org/react-native-video/download/react-native-video-3.2.1.tgz#7ba3cbdfc5c747b5b00452811e98193824b16ce3"
   dependencies:
     keymirror "0.1.1"
     prop-types "^15.5.10"
