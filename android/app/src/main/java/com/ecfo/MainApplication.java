@@ -6,14 +6,11 @@ import com.facebook.react.ReactApplication;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import com.reactnativenavigation.NavigationReactPackage;
-//import org.devio.rn.splashscreen.SplashScreenReactPackage;
-import com.brentvatne.react.ReactVideoPackage;
+import com.reactnativenavigation.bridge.NavigationReactPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativenavigation.NavigationApplication;
 
 import java.util.Arrays;
@@ -46,10 +43,10 @@ public class MainApplication extends NavigationApplication implements ReactAppli
             new ReactVideoPackage(),
             new VectorIconsPackage(),
             new SplashScreenReactPackage(),
-            new NavigationReactPackage(),
+            new NavigationReactPackage()
         // new SplashScreenReactPackage(),
-        new ReactVideoPackage(), 
-        new VectorIconsPackage()
+//        new ReactVideoPackage(),
+//        new VectorIconsPackage()
     );
   }
 
