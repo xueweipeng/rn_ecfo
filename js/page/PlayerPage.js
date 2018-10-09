@@ -223,11 +223,29 @@ export default class PlayerPage extends Component {
 
     loadSongList = () => {
         //先从总列表中获取到song_id保存
-        fetch('http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type=2&size=10&offset=0')
-            .then((response) => response.json())
+        fetch('http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type=2&size=10&offset=0',
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                Origin: "xxxx"
+            })
+            .then((response) => {
+                console.log(response.text())
+                response.json()
+            })
             .then((json) => {
-                console.log(json)
-            }).catch(function (error) {
+                if (Platform.OS === 'android') {
+                    json = json.replace(/\r?\n/g, '').replace(/[\u0080-\uFFFF]/g, '');
+                    console.log(json)
+                }
+                return json
+
+            }).then(
+                json => { console.log(json) }
+            )
+            .catch(function (error) {
                 console.log('There has been a problem with your fetch operation: ' + error.message);
                 // ADD THIS THROW error
                 throw error;
