@@ -21,6 +21,47 @@ export default class Lesson extends Component {
 		}
 	}
 
+	_fetchData() {
+		fetch('http://localhost:8081/js/data/data.json')
+			.then((response) =>
+				response.json()
+			)
+			.then((responseJson) => {
+				console.log('json data')
+				let data = responseJson.data
+				for (i = 0; i < data.length; i++) {
+					let lessonType = data[i].lessonType
+					console.log('解析结果:' + lessonType)
+					let lesson = data[i].lesson
+					for (j = 0; j < lesson.length; j++) {
+						let picUrl = lesson[j].pic
+						console.log('图片链接' + picUrl)
+						let title = lesson[j].lessonTitle
+						console.log('课程标题' + title)
+						let lessonList = lesson[j].lessonList
+						for (k = 0; k < lessonList.length; k++) {
+							let name = lessonList[k].name
+							let url = lessonList[k].url
+							console.log('课名' + name + ' 链接' + url)
+						}
+					}
+				}
+				var dataBlob = [];
+				this.setState({
+					dataBlob: dataBlob,
+					loadedData: true,
+					refreshing: false
+				})
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+	}
+
+	componentWillMount() {
+		this._fetchData();
+	}
+
 	render() {
 		return (
 			<View style={styles.container}>
@@ -89,15 +130,15 @@ export default class Lesson extends Component {
 		return (
 			<TouchableOpacity
 				onPress={this._onItemClick.bind(this, item)}>
-				<View style={{flex: 1, flexDirection: 'row'}}>
-					<Image source={ require('../image/logo_og.png') } style={{ width: 70, height: 100, marginRight: 10}}></Image>
-					<View style={{flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems:'stretch'}}>
+				<View style={{ flex: 1, flexDirection: 'row' }}>
+					<Image source={require('../image/logo_og.png')} style={{ width: 70, height: 100, marginRight: 10 }}></Image>
+					<View style={{ flex: 1, flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch' }}>
 						<Text style={styles.title}>title</Text>
 						<Text style={styles.con}>content</Text>
 						<Text style={styles.con}>content</Text>
 					</View>
 				</View>
-				
+
 			</TouchableOpacity>
 		)
 	}
@@ -126,44 +167,44 @@ export default class Lesson extends Component {
 		}
 	}
 
-	componentDidMount() {
-		this._fetchData();
-	}
+	// componentDidMount() {
+	// 	this._fetchData();
+	// }
 
 	_onRefresh() {
 		this.setState({ refreshing: true });
 		this._fetchData();
 	}
 
-	_fetchData() {
-		// fetch('http://gold.xitu.io/api/v1/hot/57fa525a0e3dd90057c1e04d/android')
-		// 	.then((response) => response.json())
-		// 	.then((responseData) => {
-		// 		let data = responseData.data;
-		// 		let entry = data.entry;
-		var dataBlob = [];
+	// 	_fetchData() {
+	// 		// fetch('http://gold.xitu.io/api/v1/hot/57fa525a0e3dd90057c1e04d/android')
+	// 		// 	.then((response) => response.json())
+	// 		// 	.then((responseData) => {
+	// 		// 		let data = responseData.data;
+	// 		// 		let entry = data.entry;
+	// 		var dataBlob = [];
 
-		// 		for (let i in entry) {
-		// 			let itemInfo = {
-		// 				title: entry[i].title,
-		// 				collectionCount: entry[i].collectionCount,
-		// 				user: entry[i].user,
-		// 				time: computeTime(entry[i].createdAtString),
-		// 				url: entry[i].url,
-		// 				commentsCount: entry[i].commentsCount,
-		// 				viewsCount: entry[i].viewsCount,
-		// 				screenshot: entry[i].screenshot ? entry[i].screenshot : null
-		// 			}
-		// 			dataBlob.push(itemInfo);
-		// 		}
+	// 		// 		for (let i in entry) {
+	// 		// 			let itemInfo = {
+	// 		// 				title: entry[i].title,
+	// 		// 				collectionCount: entry[i].collectionCount,
+	// 		// 				user: entry[i].user,
+	// 		// 				time: computeTime(entry[i].createdAtString),
+	// 		// 				url: entry[i].url,
+	// 		// 				commentsCount: entry[i].commentsCount,
+	// 		// 				viewsCount: entry[i].viewsCount,
+	// 		// 				screenshot: entry[i].screenshot ? entry[i].screenshot : null
+	// 		// 			}
+	// 		// 			dataBlob.push(itemInfo);
+	// 		// 		}
 
-		this.setState({
-			dataBlob: dataBlob,
-			loadedData: true,
-			refreshing: false
-		});
-		// 	}).done();
-	}
+	// 		this.setState({
+	// 			dataBlob: dataBlob,
+	// 			loadedData: true,
+	// 			refreshing: false
+	// 		});
+	// 		// 	}).done();
+	// 	}
 }
 
 const styles = StyleSheet.create({
