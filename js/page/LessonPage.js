@@ -20,36 +20,6 @@ export default class LessonPage extends Component {
         }
     }
 
-    _fetchData() {
-        // fetch('http://gold.xitu.io/api/v1/hot/57fa525a0e3dd90057c1e04d/android')
-        // 	.then((response) => response.json())
-        // 	.then((responseData) => {
-        // 		let data = responseData.data;
-        // 		let entry = data.entry;
-        var dataBlob = [];
-
-        // 		for (let i in entry) {
-        // 			let itemInfo = {
-        // 				title: entry[i].title,
-        // 				collectionCount: entry[i].collectionCount,
-        // 				user: entry[i].user,
-        // 				time: computeTime(entry[i].createdAtString),
-        // 				url: entry[i].url,
-        // 				commentsCount: entry[i].commentsCount,
-        // 				viewsCount: entry[i].viewsCount,
-        // 				screenshot: entry[i].screenshot ? entry[i].screenshot : null
-        // 			}
-        // 			dataBlob.push(itemInfo);
-        // 		}
-
-        this.setState({
-            lessonList: dataBlob,
-            loadedData: true,
-            refreshing: false
-        });
-        // 	}).done();
-    }
-
     _handleBack() {
 
     }
@@ -64,67 +34,61 @@ export default class LessonPage extends Component {
 
     _renderItem = (item) => {
         return (
-			<TouchableOpacity
-				onPress={this._onItemClick.bind(this, item)}>
-                <Text style={styles.title}>{item.item.title}</Text>				
-			</TouchableOpacity>
-		)
+            <TouchableOpacity
+                onPress={this._onItemClick.bind(this, item)}>
+                <Text style={styles.title}>{item.item.name}</Text>
+            </TouchableOpacity>
+        )
     }
 
     _onItemClick = (item) => {
-		// this._alert(item.index);
-		this.props.navigator.push({
-			screen: 'Player',
+        // this._alert(item.index);
+        this.props.navigator.push({
+            screen: 'Player',
             title: '',
             passProps: {
-                lessonId: item.index,
-                lessonTitle: item.item.title,
+                lessonTitle: item.item.name,
                 lessonUrl: item.item.url
-                }
-		});
-    }
-    
-    _alert(index) {
-		if (Platform.OS === 'android') {
-			Alert.alert(
-				'Message',
-				"This function currently isn't available" + index,
-				[{ text: 'OK', onPress: () => { } }]
-			);
-		} else if (Platform.OS === 'ios') {
-			AlertIOS.alert(
-				'Message',
-				"This function currently isn't available" + index,
-				[{ text: 'OK', onPress: () => { } }]
-			);
-		}
-    }
-    
-    componentWillMount() {
-        this._fetchData();
+            }
+        });
     }
 
-    render() {
-        var data = [];
-        for (var i = 0; i < 5; i++) {
-            data.push({ key: i, title: '第' + i + '课', url: 'http://media.ecfo.cn/43c7b66fvodtransgzp1251278716/a591cd155285890781446982370/v.f210.m3u8' });
-        }
-        if (!this.state.refreshing || this.state.loadedData) {
-            return (
-                <View style={{ flex: 1 }}>
-                    <FlatList
-                        ref={(flatList) => this._flatList = flatList}
-                        ListHeaderComponent={this._header} 
-                        keyExtractor={(item, index) => '' + index}
-                        data={data}
-                        ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
-                        refreshing={false}
-                    />
-                </View>
+    _alert(index) {
+        if (Platform.OS === 'android') {
+            Alert.alert(
+                'Message',
+                "This function currently isn't available" + index,
+                [{ text: 'OK', onPress: () => { } }]
+            );
+        } else if (Platform.OS === 'ios') {
+            AlertIOS.alert(
+                'Message',
+                "This function currently isn't available" + index,
+                [{ text: 'OK', onPress: () => { } }]
             );
         }
     }
+
+    componentWillMount() {
+
+    }
+
+    render() {
+        return (
+            <View style={{ flex: 1 }}>
+                <FlatList
+                    ref={(flatList) => this._flatList = flatList}
+                    ListHeaderComponent={this._header}
+                    keyExtractor={(item, index) => '' + index}
+                    data={this.props.lessonList}
+                    ItemSeparatorComponent={this._separator}
+                    renderItem={this._renderItem}
+                    refreshing={false}
+                />
+            </View>
+        );
+    }
+
 }
 
 const styles = StyleSheet.create({
