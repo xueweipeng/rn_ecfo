@@ -91,7 +91,7 @@ export default class Lesson extends Component {
 					<FlatList
 						ref={(flatList) => this._flatList = flatList}
 						ListHeaderComponent={this._header}
-						keyExtractor={(item, index) => '' + index}
+						keyExtractor={(item, index) => item + index}
 						data={lesson}
 						ItemSeparatorComponent={this._separator}
 						renderItem={this._renderLessonItem}
@@ -133,6 +133,12 @@ export default class Lesson extends Component {
 				lessonList: item.item.lessonList
 			}
 		});
+		// this.props.navigator.push({
+		// 	screen: 'WebView',
+		// 	passProps: {
+		// 		url: 'https://github.com/facebook/react-native'
+		// 	}
+		// });
 	}
 
 	_alert(index) {

@@ -21,8 +21,7 @@ import theme from '../config/theme';
 import px2dp from '../util/px2dp';
 var { width, height } = Dimensions.get('window');
 import Video from 'react-native-video'
-var lyrObj = []   // 存放歌词
-var myAnimate;
+
 export default class PlayerPage extends Component {
     constructor(props) {
         super(props);
@@ -120,7 +119,7 @@ export default class PlayerPage extends Component {
             pause: !this.state.pause
         })
         //判断按钮显示什么
-        if (this.state.pause == true) {
+        if (this.state.pause == false) {
             this.setState({
                 isplayBtn: require('../image/play.png')
             })
@@ -179,14 +178,6 @@ export default class PlayerPage extends Component {
     onLoad = (data) => {
         console.log('player loaded')
         this.setState({ duration: data.duration });
-    }
-
-    play = () => {
-        console.log('play')
-        this.setState({
-            file_duration: 100,
-            file_link: 'http://media.ecfo.cn/43c7b66fvodtransgzp1251278716/a591cd155285890781446982370/v.f210.m3u8'
-        })
     }
 
     onBuffer = () => {
@@ -270,9 +261,7 @@ export default class PlayerPage extends Component {
 
                 <Video
                     source={{ uri: this.props.lessonUrl }}
-                    ref={(ref) => {
-                        this.player = ref
-                    }}
+                    ref='video'
                     volume={1.0}
                     paused={this.state.pause}
                     onProgress={(e) => this.onProgress(e)}
@@ -291,7 +280,7 @@ export default class PlayerPage extends Component {
                         style={styles.slider}
                         ref='slider'
                         value={this.state.sliderValue}
-                        maximumValue={this.state.file_duration}
+                        maximumValue={this.state.duration}
                         step={1}
                         minimumTrackTintColor='#FFDB42'
                         onValueChange={(value) => {
