@@ -48,7 +48,8 @@ export default class LessonPage extends Component {
             title: '',
             passProps: {
                 lessonTitle: item.item.name,
-                lessonUrl: item.item.url
+                lessonUrl: item.item.url,
+                lessonPic: this.props.picUrl
             }
         });
     }
@@ -79,7 +80,7 @@ export default class LessonPage extends Component {
                 <FlatList
                     ref={(flatList) => this._flatList = flatList}
                     ListHeaderComponent={this._header}
-                    keyExtractor={(item, index) => '' + index}
+                    keyExtractor={(item, index) => item + index}
                     data={this.props.lessonList}
                     ItemSeparatorComponent={this._separator}
                     renderItem={this._renderItem}

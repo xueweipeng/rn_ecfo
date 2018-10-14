@@ -48,6 +48,24 @@ export default class Lesson extends Component {
 			});
 	}
 
+	_onBanner1Clicked = () => {
+		this.props.navigator.push({
+			screen: 'WebView',
+			passProps: {
+				url: 'https://github.com/facebook/react-native'
+			}
+		});
+	}
+
+	_onBanner2Clicked = () => {
+		this.props.navigator.push({
+			screen: 'WebView',
+			passProps: {
+				url: 'http://www.baidu.com'
+			}
+		});
+	}
+
 	componentWillMount() {
 		this._fetchData();
 	}
@@ -69,12 +87,12 @@ export default class Lesson extends Component {
 						height={px2dp(130)}
 						autoplay={true}
 						bounces={true}>
-						<View style={styles.slide}>
+						<TouchableOpacity onPress={this._onBanner1Clicked.bind(this)}>
 							<Image style={styles.image} source={bannerImages[0]} resizeMode="stretch" />
-						</View>
-						<View style={styles.slide}>
+						</TouchableOpacity>
+						<TouchableOpacity onPress={this._onBanner2Clicked.bind(this)}>
 							<Image style={styles.image} source={bannerImages[1]} resizeMode="stretch" />
-						</View>
+						</TouchableOpacity>
 					</Swiper>
 					{this._renderListView()}
 				</ScrollView >
@@ -115,7 +133,7 @@ export default class Lesson extends Component {
 			<TouchableOpacity
 				onPress={this._onItemClick.bind(this, item)}>
 				<View style={{ flex: 1, flexDirection: 'row' }}>
-					<Image source={{ uri: item.item.pic }} style={{ width: 70, height: 100, marginRight: 10 }}></Image>
+					<Image source={{ uri: item.item.pic }} style={{ width: 70, height: 100, margin: 10 }}></Image>
 					<View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch' }}>
 						<Text style={styles.title}>{item.item.lessonTitle}</Text>
 					</View>
@@ -130,15 +148,10 @@ export default class Lesson extends Component {
 			screen: 'LessonPage',
 			title: item.item.lessonTitle,
 			passProps: {
-				lessonList: item.item.lessonList
+				lessonList: item.item.lessonList,
+				picUrl: item.item.pic
 			}
 		});
-		// this.props.navigator.push({
-		// 	screen: 'WebView',
-		// 	passProps: {
-		// 		url: 'https://github.com/facebook/react-native'
-		// 	}
-		// });
 	}
 
 	_alert(index) {
@@ -197,7 +210,9 @@ const styles = StyleSheet.create({
 		textAlign: 'left',
 		textAlignVertical: 'center',
 		color: 'black',
-		fontSize: 40,
+		fontSize: 30,
+		width: Dimensions.get('window').width - 100,
+		marginRight: 20
 	},
 	content: {
 		textAlign: 'left',

@@ -254,9 +254,8 @@ export default class PlayerPage extends Component {
             <View style={styles.container}>
                 {/*Android下必须有控件才能跳转*/}
                 {/* <NavigationBar title="个人主页" backOnPress={this._handleBack.bind(this)}/> */}
-                <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>播放页面</Text>
-                <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>{this.props.lessonTitle}</Text>
-                <Image source={require('../image/banner1.jpg')} style={styles.image}></Image>
+                <Text style={{ color: theme.text.color, fontSize: px2dp(20), textAlign:'center', marginTop: 20 }}>{this.props.lessonTitle}</Text>
+                <Image source={{uri: this.props.lessonPic}} style={styles.image}></Image>
                 {/*播放器*/}
 
                 <Video
@@ -271,7 +270,6 @@ export default class PlayerPage extends Component {
                     audioOnly={true}
                     onError={(e) => this.onError(e)}
                     onBuffer={() => this.onBuffer()}
-                    style={styles.playingInfo}
                 />
 
                 <View style={styles.playingInfo}>
@@ -324,13 +322,16 @@ const styles = StyleSheet.create({
     image: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'space-around',
-        marginTop: 130,
+        justifyContent: 'space-between',
+        marginTop: 80,
         marginBottom: 130,
+        marginLeft: 30,
+        marginRight: 30
     },
     slider: {
         marginLeft: 10,
         marginRight: 10,
+        marginBottom : 10
     },
     playingControl: {
         flexDirection: 'row',
@@ -338,6 +339,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         marginLeft: 10,
         marginRight: 10,
+        marginBottom: 20
     },
     playingInfo: {
         flexDirection: 'column',
