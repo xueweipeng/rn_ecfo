@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet, Platform, RefreshControl, ScrollView, ToastAndroid, Image, Dimensions, PixelRatio, Alert, AlertIOS, FlatList, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet, Platform, RefreshControl, ScrollView, ToastAndroid, Image, Dimensions, PixelRatio, Alert, AlertIOS, FlatList, SectionList, TouchableOpacity } from 'react-native';
 import px2dp from '../util/px2dp';
 import theme from '../config/theme';
 import computeTime from '../util/computeTime';
@@ -102,11 +102,24 @@ export default class Lesson extends Component {
 	}
 
 	_renderListView() {
+		
+		// for (var i = 0; i < this.state.dataBlob.length; i++) {
+			// var datas = [];
+			// for (var j = 0; j < 10; j++) {
+			// 	datas.push({ title: 'title:' + j });
+			// }
+		// 	sections.push({ key: i, data: this.state.dataBlob });
+		// }
+		
 		if (!this.state.refreshing || this.state.loadedData) {
-			let lesson = this.state.dataBlob[0].lesson
+			var sections = this.state.dataBlob.map(row => ({
+				lessonType: row.lessonType,
+				data: row.lesson,
+			}));
+			// let lesson = this.state.dataBlob[0].lesson
 			return (
 				<View style={{ flex: 1 }}>
-					<FlatList
+					{/* <FlatList
 						ref={(flatList) => this._flatList = flatList}
 						ListHeaderComponent={this._header}
 						keyExtractor={(item, index) => item + index}
@@ -114,10 +127,37 @@ export default class Lesson extends Component {
 						ItemSeparatorComponent={this._separator}
 						renderItem={this._renderLessonItem}
 						refreshing={false}
-					/>
+					/> */}
+					<SectionList
+						renderSectionHeader={this.renderHeader}
+						renderItem={this.renderItem}
+						sections={sections} 
+						ItemSeparatorComponent={this._separator}
+						refreshing={false}
+						keyExtractor={(item, index) => item + index} />
 				</View>
 			);
 		}
+	}
+
+	renderHeader = (item) => {
+		return <Text style={styles.txt}>{item.section.lessonType}</Text>;
+	}
+
+	renderItem = (item) => {
+		console.log('!!!!!!!' + JSON.stringify(item));
+		return (
+			<TouchableOpacity
+				onPress={this._onItemClick.bind(this, item)}>
+				<View style={{ flex: 1, flexDirection: 'row' }}>
+					<Image source={{ uri: item.item.pic }} style={{ width: 70, height: 100, margin: 10 }}></Image>
+					<View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch' }}>
+						<Text style={styles.title}>{item.item.lessonTitle}</Text>
+					</View>
+				</View>
+
+			</TouchableOpacity>
+		)
 	}
 
 	_header = () => {
@@ -173,6 +213,19 @@ export default class Lesson extends Component {
 	_onRefresh() {
 		this.setState({ refreshing: true });
 		this._fetchData();
+	}
+
+	_renderItem = (info) => {
+		var txt = 'index:' + info.index + ' ' + info.item.title;
+		var bgColor = info.index % 2 == 0 ? 'red' : 'blue';
+		return <Text
+			style={{ height: 100, textAlignVertical: 'center', backgroundColor: bgColor, color: 'white', fontSize: 15 }}>{txt}</Text>
+	}
+
+	_sectionComp = (info) => {
+		var txt = 'key:' + info.section.key;
+		return <Text
+			style={{ height: 50, textAlign: 'center', textAlignVertical: 'center', backgroundColor: 'black', color: 'white', fontSize: 30 }}>{txt}</Text>
 	}
 }
 
