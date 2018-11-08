@@ -125,9 +125,9 @@ export default class Me extends Component {
                         </TouchableOpacity>
                     }
                     <View style={styles.list}>
-                        <Item icon="md-heart" text="我的收藏" subText="15篇" iconColor="#32cd32" onPress={this._onPressCallback.bind(this, 2)} />
+                        <Item icon="md-heart" text="我的收藏" subText="15篇" iconColor="#cd3232" onPress={this._onPressCallback.bind(this, 2)} />
                         <Item icon="md-eye" text="阅读过的文章" subText="15篇" onPress={this._onPressCallback.bind(this, 3)} />
-                        <Item icon="md-pricetag" text="标签管理" subText="9个" onPress={this._onPressCallback.bind(this, 4)} />
+                        <Item icon="md-card" text="标签管理" subText="9个" onPress={this._onPressCallback.bind(this, 4)} />
                     </View>
                     <View style={styles.list}>
                         <Item icon="md-ribbon" text="掘金排名" iconColor="#ff4500" onPress={this._onPressCallback.bind(this, 5)} />
@@ -154,32 +154,17 @@ class Item extends Component {
 
     render() {
         const { icon, iconColor, text, subText, onPress } = this.props;
-
-        if (Platform.OS === 'android') {
-            return (
-                <TouchableOpacity onPress={onPress}>
-                    <View style={styles.listItem}>
-                        <Icon name={icon} size={px2dp(22)} color={iconColor} />
-                        <Text style={{ color: 'black', fontSize: px2dp(15), marginLeft: px2dp(20) }}>{text}</Text>
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                            <Text style={{ color: "#ccc" }}>{subText}</Text>
-                        </View>
+        return (
+            <TouchableOpacity onPress={onPress}>
+                <View style={styles.listItem}>
+                    <Icon name={icon} size={px2dp(22)} color={iconColor} />
+                    <Text style={{ color: 'black', fontSize: px2dp(15), marginLeft: px2dp(20) }}>{text}</Text>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
+                        <Text style={{ color: "#ccc" }}>{subText}</Text>
                     </View>
-                </TouchableOpacity>
-            );
-        } else if (Platform.OS === 'ios') {
-            return (
-                <TouchableOpacity onPress={onPress} activeOpacity={theme.btnActiveOpacity}>
-                    <View style={styles.listItem}>
-                        <Icon name={icon} size={px2dp(22)} color={iconColor} />
-                        <Text style={{ color: 'black', fontSize: px2dp(15), marginLeft: px2dp(20) }}>{text}</Text>
-                        <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                            <Text style={{ color: "#ccc" }}>{subText}</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            );
-        }
+                </View>
+            </TouchableOpacity>
+        );
     }
 }
 

@@ -43,6 +43,11 @@ export default class LessonPage extends Component {
 
     _onItemClick = (item) => {
         // this._alert(item.index);
+        // this.props.navigator.popToRoot({
+        //     animated: false, // does the popToRoot have transition animation or does it happen immediately (optional)
+        //     // animationType: 'fade', // 'fade' (for both) / 'slide-horizontal' (for android) does the popToRoot have different transition animation (optional)
+        //   })
+        //导航器官方文档 https://wix.github.io/react-native-navigation/#/screen-api?id=poptorootparams-
         this.props.navigator.push({
             screen: 'Player',
             title: '',
@@ -52,6 +57,7 @@ export default class LessonPage extends Component {
                 lessonPic: this.props.picUrl
             }
         });
+        
     }
 
     _alert(index) {
