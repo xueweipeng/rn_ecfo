@@ -1,6 +1,4 @@
-/**
- * Created by wangdi on 5/11/16.
- */
+
 'use strict';
 
 import {PixelRatio, Dimensions, Platform} from 'react-native';

@@ -4287,6 +4287,10 @@ react-native-splash-screen@^3.0.0:
   version "3.0.7"
   resolved "http://registry.npm.taobao.org/react-native-splash-screen/download/react-native-splash-screen-3.0.7.tgz#352e87ad79ab1136e0e678a37b75cac0375b325f"
 
+react-native-storage@^0.2.2:
+  version "0.2.3"
+  resolved "http://registry.npm.taobao.org/react-native-storage/download/react-native-storage-0.2.3.tgz#294f034c6ecbd9e08cfe02fa24ecb9db7a861a1b"
+
 react-native-swiper@^1.5.3:
   version "1.5.13"
   resolved "http://registry.npm.taobao.org/react-native-swiper/download/react-native-swiper-1.5.13.tgz#fa695cd4ab77b9a9df2d2bfee38ea7274dd07a2e"
@@ -4514,6 +4518,10 @@ realpath-native@^1.0.0:
   resolved "http://registry.npm.taobao.org/realpath-native/download/realpath-native-1.0.0.tgz#7885721a83b43bd5327609f0ddecb2482305fdf0"
   dependencies:
     util.promisify "^1.0.0"
+
+redux-thunk@^2.2.0:
+  version "2.3.0"
+  resolved "http://registry.npm.taobao.org/redux-thunk/download/redux-thunk-2.3.0.tgz#51c2c19a185ed5187aaa9a2d08b666d0d6467622"
 
 redux@^4.0.0:
   version "4.0.0"

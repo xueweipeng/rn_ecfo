@@ -4,11 +4,11 @@ import * as types from '../constants/loginTypes';
 
 // 模拟用户信息
 let user = {
-    name: 'eking',
-    nikeName: '羿璟',
+    name: 'weapon',
+    nikeName: 'weapon',
     age: 30,
     pwd: '123456',
-    mobile: 13510005217
+    mobile: 18519661369
 };
 
 // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理

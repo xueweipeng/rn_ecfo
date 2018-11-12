@@ -1,6 +1,6 @@
 'use strict';
 
-import * as types from '../login/constants/regTypes';
+import * as types from '../constants/regTypes';
 
 export function reg(mobile, password) {
     console.log('注册方法');
