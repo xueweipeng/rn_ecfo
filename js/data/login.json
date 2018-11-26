@@ -1,0 +1,15 @@
+{
+    "data": {
+        "user" : {
+            "name": "weapon",
+            "sex" : "male",
+            "phone" : "18519661369",
+            "avatar" : "http://www.ecfo.com.cn/img2/elevenV.png",
+            "birth" : "1900/01/01",
+            "signature" : "我思故我在",
+            "token": "1212asfasdfasdfsdf"
+        }
+    },
+    "code": 200,
+    "message": "success"
+}

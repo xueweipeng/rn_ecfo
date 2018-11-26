@@ -2,7 +2,7 @@ import React from 'react';
 import { AsyncStorage } from 'react-native';
 import Storage from 'react-native-storage';
 
-let storage = new Storage({
+const storage = new Storage({
     // 最大容量，默认值1000条数据循环存储
     size: 1000,
 
@@ -64,5 +64,6 @@ let storage = new Storage({
     }
 });
 
+export default storage;
 // 全局变量
-global.storage = storage;
+// global.storage = storage;

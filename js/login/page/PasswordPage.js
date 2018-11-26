@@ -18,23 +18,16 @@ import {
 } from 'react-native'
 import { connect } from 'react-redux'; // 引入connect函数
 import * as registerAction from '../../action/registerAction';// 导入action方法
-
+import alert from '../../util/utils'
 import { THEME_BACKGROUND, THEME_LABEL, THEME_TEXT, BUTTON_BACKGROUND } from "../../config/color"
+import storage from '../../util/storage'
 
 export default class PasswordPage extends Component {
+    mobile = ''
+    password = ''
     constructor(props) {
         super(props);
         this.state = { message: '' };
-    }
-
-    // 状态更新
-    shouldComponentUpdate(nextProps, nextState) {
-        // 注册成功,切到登录
-        if (nextProps.status === '注册成功' && nextProps.isSuccess) {
-            this.props.navigation.dispatch(resetAction);
-            return false;
-        }
-        return true;
     }
 
     updateState(key, val) {
@@ -43,31 +36,65 @@ export default class PasswordPage extends Component {
         this.setState(state);
     }
 
+    // 状态更新，判断是否登录并作出处理
+    shouldComponentUpdate(nextProps, nextState) {
+        // 登录完成,切成功登录
+        // if (nextProps.status === '登陆成功' && nextProps.isSuccess) {
+        //     // this.props.navigation.dispatch(resetAction);
+        //     this.checkHasLogin();
+        //     return false;
+        // }
+        return true;
+    }
+
+    _login(number, password) {
+        fetch('http://localhost:8081/js/data/login.json?mobile=' + number + '&pwd=' + password)
+			.then((response) =>
+				response.json()
+			)
+			.then((responseJson) => {
+                console.log('登录返回')
+				let message = responseJson.message
+				if (message === 'success') {
+                    let data = responseJson.data
+                    let user = data.user
+                    console.log('name=' + user.name)
+                    console.log('phone=' + user.phone)
+                    storage.save({
+                        key: 'user',
+                        data: user
+                    });
+                    this.props.navigator.popToRoot({
+                        animated: true, // does the popToRoot have transition animation or does it happen immediately (optional)
+                        animationType: 'fade', // 'fade' (for both) / 'slide-horizontal' (for android) does the popToRoot have different transition animation (optional)
+                      });
+                } else {
+                    alert('登录失败:' + message)
+                }
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+    }
+
     doLogin() {
-        const { reg } = this.props;
-        if (!this.mobile) {
-            this.updateState('message', '请输入手机号码');
-            return;
+        if (this.mobile.length <= 0) {
+            alert('号码长度不正确')
+            return
+        } 
+        if (this.password.length === 0) {
+            alert('密码不能为空')
+            return
         }
-        if (!this.password) {
-            this.updateState('message', '请输入登录密码');
-            return;
-        }
-        if (!this.password2) {
-            this.updateState('message', '请输入确认密码');
-            return;
-        }
-        if (this.password !== this.password2) {
-            this.updateState('message', '前后两次密码不一致');
-            return;
-        }
-        reg(this.mobile, this.password);
+        this._login(this.mobile, this.password)
     }
 
     doForgetPassword() {
-
+        this.props.navigator.push({
+            screen: 'FindPassword',
+            title: '',
+        });
     }
-
 
     render() {
         let message = this.state && this.state.message ? this.state.message : '';
@@ -75,7 +102,7 @@ export default class PasswordPage extends Component {
             <View style={styles.passwordPage}>
                 <Text style={styles.textStyle}>手机账号登录</Text>
                 <TextInput style={styles.passwordInput} placeholder='请输入手机号码' keyboardType={'numeric'}
-                    autoCapitalize={'none'} maxLength={20}
+                    autoCapitalize={'none'} maxLength={11}
                     onChangeText={(text) => this.mobile = text} />
                 <TextInput style={styles.passwordInput} placeholder='请输入密码' secureTextEntry={true}
                     autoCapitalize={'none'} maxLength={20}
@@ -114,6 +141,7 @@ const styles = StyleSheet.create({
         color: BUTTON_BACKGROUND,
         fontSize: 14,
         textAlign: 'right',
+        marginTop: 28,
     },
     message: {
         marginTop: 16,

@@ -145,7 +145,7 @@ export default class Lesson extends Component {
 	}
 
 	renderItem = (item) => {
-		console.log('!!!!!!!' + JSON.stringify(item));
+		// console.log('!!!!!!!' + JSON.stringify(item));
 		return (
 			<TouchableOpacity
 				onPress={this._onItemClick.bind(this, item)}>

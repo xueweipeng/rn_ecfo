@@ -1,33 +1,39 @@
 'use strict';
 
-import * as types from '../constants/loginTypes';
-
-// 模拟用户信息
-let user = {
-    name: 'weapon',
-    nikeName: 'weapon',
-    age: 30,
-    pwd: '123456',
-    mobile: 18519661369
-};
+import * as types from '../constants/loginTypes'
+import storage from '../util/storage'
 
 // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理
-export function login(mobile, password) {
+export function login(isPassword, mobile, passwordOrAuthcode) {
     console.log('登录方法');
     return dispatch => {
         dispatch(isLogining());
-        // 模拟用户登录
-        if (mobile === '' + user.mobile && password === user.pwd) {
-            dispatch(loginSuccess(true, user));
+        let url = ''
+        if (isPassword === true) {
+            url = 'http://localhost:8081/js/data/login.json?mobile=' + mobile + '&pwd=' + passwordOrAuthcode
         } else {
-            dispatch(loginError(false));
+            url = 'http://localhost:8081/js/data/login.json?mobile=' + mobile + '&auth=' + passwordOrAuthcode
         }
-        /*let result = fetch('https://localhost:8088/login')
-         .then((res) => {
-         dispatch(loginSuccess(true, user));
-         }).catch((e) => {
-         dispatch(loginError(false));
-         })*/
+        fetch(url)
+            .then((response) =>
+                response.json()
+            )
+            .then((responseJson) => {
+                console.log('登录返回')
+                let message = responseJson.message
+                if (message === 'success') {
+                    let data = responseJson.data
+                    let user = data.user
+                    console.log('name=' + user.name)
+                    console.log('phone=' + user.phone)
+                    dispatch(loginSuccess(true, user));
+                } else {
+                    dispatch(loginError(false, message));
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 }
 
@@ -39,7 +45,7 @@ function isLogining() {
 
 function loginSuccess(isSuccess, user) {
     console.log('success');
-    global.storage.save({
+    storage.save({
         key: 'user',
         data: user
     });
@@ -49,9 +55,10 @@ function loginSuccess(isSuccess, user) {
     }
 }
 
-function loginError(isSuccess) {
+function loginError(isSuccess, message) {
     console.log('error');
     return {
         type: types.LOGIN_IN_ERROR,
+        msg: message
     }
 }

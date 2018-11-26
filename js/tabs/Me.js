@@ -20,28 +20,35 @@ import {
 } from 'react-native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
-import IndividualPage from '../page/IndividualPage';
-import TextButton from '../component/TextButton';
 import theme from '../config/theme'
 import px2dp from '../util/px2dp'
 import Avatar from '../component/Avatar'
-
-
+import storage from '../util/storage'
+import store from '../screens'
 
 export default class Me extends Component {
     constructor(props) {
         super(props);
         this.state = {
-
+            name : '未登录',
+            hasLogin: false
         };
     }
     _onPressCallback(position) {
         switch (position) {
             case 0:  //title
-                this.props.navigator.push({
-                    screen: 'Login',
-                    title: '登录',
-                });
+                if (this.state.hasLogin === true) {
+                    this.props.navigator.push({
+                        screen: 'Personal',
+                        title: '我的信息',
+                    });
+                } else {
+                    this.props.navigator.push({
+                        screen: 'Login',
+                        title: '登录',
+                    });
+                }
+                
                 break;
 
             case 1:  // add occupation
@@ -74,6 +81,18 @@ export default class Me extends Component {
         }
     }
 
+    componentWillMount() {
+        this.checkHasLogin()
+    }
+
+    componentDidMount() {
+        store.subscribe(() => {
+            //监听state变化
+            console.log('me page state change ' + store.getState().loginIn.status);
+            this.checkHasLogin()
+        });
+    }
+
     _alert() {
         if (Platform.OS === 'android') {
             Alert.alert(
@@ -90,6 +109,23 @@ export default class Me extends Component {
         }
     }
 
+    checkHasLogin() {
+        storage.load({
+            key: 'user',
+            autoSync: false,
+        }).then(ret => {
+            console.log('checkHasLogin:' + ret.token)
+            if (ret && ret.token) {
+                this.setState({
+                    name: ret.name,
+                    hasLogin: true
+                })
+            }
+        }).catch(err => {
+            // console.warn(err.message);
+        });
+    }
+
     render() {
         return (
             <View style={styles.container}>
@@ -102,8 +138,8 @@ export default class Me extends Component {
                             <View style={styles.intro}>
                                 <Avatar image={require('../image/logo_og.png')} size={px2dp(55)} textSize={px2dp(20)} />
                                 <View style={{ marginLeft: px2dp(12) }}>
-                                    <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>android</Text>
-                                    <TextButton text="添加职位 @添加公司" color="#949494" fontSize={px2dp(13)} onPress={this._onPressCallback.bind(this, 1)} />
+                                    <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>{this.state.name}</Text>
+                                    {/* <TextButton text="添加职位 @添加公司" color="#949494" fontSize={px2dp(13)} onPress={this._onPressCallback.bind(this, 1)} /> */}
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                                     <Icon name="ios-arrow-forward" color="#ccc" size={px2dp(30)} />
@@ -115,8 +151,8 @@ export default class Me extends Component {
                             <View style={styles.intro}>
                                 <Avatar image={require('../image/logo_og.png')} size={px2dp(55)} textSize={px2dp(20)} />
                                 <View style={{ marginLeft: px2dp(12) }}>
-                                    <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>WangdiCoder</Text>
-                                    <TextButton text="添加职位 @添加公司" color="#949494" fontSize={px2dp(13)} onPress={this._onPressCallback.bind(this, 1)} />
+                                    <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>{this.state.name}</Text>
+                                    {/* <TextButton text="添加职位 @添加公司" color="#949494" fontSize={px2dp(13)} onPress={this._onPressCallback.bind(this, 1)} /> */}
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
                                     <Icon name="ios-arrow-forward" color="#ccc" size={px2dp(30)} />

@@ -12,28 +12,26 @@ export default function loginIn(state = initialState, action) {
         case types.LOGIN_IN_DOING:
             return {
                 ...state,
-                status: '正在登陆',
+                status: '正在登录',
                 isSuccess: false,
                 user: null,
             };
-            break;
         case types.LOGIN_IN_DONE:
             return {
                 ...state,
-                status: '登陆成功',
+                status: '登录成功',
                 isSuccess: true,
                 user: action.user,
             };
-            break;
         case types.LOGIN_IN_ERROR:
             return {
                 ...state,
-                status: '登录出错',
-                isSuccess: true,
+                status: action.msg,
+                isSuccess: false,
                 user: null,
             };
-            break;
         default:
+            console.log(state);
             return state;
     }
 }

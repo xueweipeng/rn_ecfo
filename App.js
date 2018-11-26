@@ -12,18 +12,29 @@ import { registerScreens } from './js/screens';
 // });
 // export default App;
 
-// export default class ecfoApp extends Component {
+registerScreens();
+Navigation.startSingleScreenApp({
+    screen:
+    {
+        label: '首页',
+        screen: 'MainPage',
+    }
+});
+
+
+// export default class App extends Component {
+//     componentDidMount() {
+//         console.log('init app')
+//     }
+
 //     render() {
 //         return (
-//             <MainPage navigate={this.props.navigation} />
-//         );
+//             // 实现app和store的关联，等于整个系统的组件都被包含住了
+//             <Provider store={store}>
+//                 <App />
+//             </Provider>
+//         )
 //     }
 // }
 
-registerScreens();
-Navigation.startSingleScreenApp({screen:
-    {
-        label : '首页',
-        screen : 'MainPage',
-    }
-});
+

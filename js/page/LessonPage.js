@@ -3,13 +3,7 @@ import { Text, View, StyleSheet, Platform, TouchableOpacity, Dimensions, Image, 
 import theme from '../config/theme';
 import px2dp from '../util/px2dp';
 
-/**
- * 生命周期如下:
-    constructor()
-    componentWillMount()
-    render()
-    componentDidMount()
- */
+
 export default class LessonPage extends Component {
     constructor(props) {
         super(props);

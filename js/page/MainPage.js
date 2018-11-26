@@ -40,8 +40,17 @@ export default class MainPage extends Component {
         }
     }
 
-    render() {
+    componentDidMount() {
+        
+    }
 
+    render() {
+        if (this.props.login === true) {
+            this.props.navigator.push({
+                screen: 'Login',
+                title: '登录',
+            });
+        }
         return (
             <TabNavigator style={styles.container}>
                 <TabNavigator.Item

@@ -12,6 +12,7 @@ import {
     ScrollView,
     TextInput,
     ActivityIndicator,
+    NetInfo,
     Animated,
     Easing,
     InteractionManager
@@ -20,6 +21,7 @@ import { connect } from 'react-redux'; // 引入connect函数
 import * as loginAction from '../../action/loginAction';// 导入action方法
 
 import { THEME_BACKGROUND, THEME_LABEL, THEME_TEXT, BUTTON_BACKGROUND } from "../../config/color"
+import alert from '../../util/utils'
 
 export default class LoginPage extends Component {
     mobile = '';
@@ -41,24 +43,45 @@ export default class LoginPage extends Component {
         return true;
     }
 
+    requestForAuthCode(mobile) {
+        fetch('http://localhost:8081/js/data/authCode.json?mobile=' + mobile)
+			.then((response) =>
+				response.json()
+			)
+			.then((responseJson) => {
+                console.log('验证码请求成功')
+				let message = responseJson.message
+				if (message === 'success') {
+                    this.props.navigator.push({
+                        screen: 'AuthCode',
+                        title: '',
+                        passProps: {
+                            number: this.mobile,
+                            from: 'login'
+                        }
+                    });
+                } else {
+                    alert('请求验证码失败，失败信息：' + message)
+                }
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+    }
+
     doAuthCode() {
-        // const { login } = this.props;
-        // if (!this.mobile) {
-        //     this.updateState('message', '请输入手机号码');
-        //     return;
-        // }
-        // if (!this.password) {
-        //     this.updateState('message', '请输入密码');
-        //     return;
-        // }
-        // login(this.mobile, this.password);
-        this.props.navigator.push({
-            screen: 'AuthCode',
-            title: '',
-            passProps: {
-                number: this.mobile
-            }
-        });
+        if (this.mobile.length < 11) {
+            alert('号码长度不对')
+            return
+        }
+        // NetInfo.isConnected.fetch().then(isConnected => {
+        //     if (isConnected === false) {
+        //         alert('请检查手机网络状况')
+        //         return
+        //     }
+        //   });
+
+        this.requestForAuthCode(this.mobile)
     }
 
     doPassword() {
@@ -69,8 +92,6 @@ export default class LoginPage extends Component {
     }
 
     render() {
-        const { login } = this.props;
-        let message = this.state && this.state.message ? this.state.message : '';
         return (
             <View style={styles.loginPage}>
                 <View style={styles.loginSection}>
@@ -108,19 +129,20 @@ const styles = StyleSheet.create({
         marginBottom: 32
     },
     loginButton: {
-        margin: 30,
+        margin: 40,
         color: BUTTON_BACKGROUND,
         textAlign: 'center',
     },
     subButton: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 18
+        marginTop: 28
     },
     subButtonText: {
         color: BUTTON_BACKGROUND,
         fontSize: 14,
         textAlign: 'right',
+        marginTop: 18
     },
     loginInput: {
         marginBottom: 8,
