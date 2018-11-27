@@ -27,7 +27,6 @@ import * as loginAction from '../../action/loginAction';// 导入action方法
 import store from '../../screens'
 
 class AuthCodePage extends Component {
-    authCode = ''
     constructor(props) {
         super(props);
         this.state = {
@@ -170,7 +169,6 @@ class AuthCodePage extends Component {
                             // shouldStartCountting是一个回调函数，根据调用接口的情况在适当的时候调用它来决定是否开始倒计时
                             this.requestForAuthCode(this.props.number, shouldStartCounting)
                         }} />
-                    />
                 </View>
                 <TextInput style={styles.authInput} placeholder='请输入验证码' keyboardType={'numeric'}
                     autoCapitalize={'none'} maxLength={4}
