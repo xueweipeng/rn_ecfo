@@ -93,18 +93,28 @@ class AuthCodePage extends Component {
         store.subscribe(() => {
             //监听state变化
             console.log('auth code page state change ' + store.getState().loginIn.status);
-            let success = store.getState().loginIn.isSuccess
-            if (success === true) {
-                this.props.navigator.popToRoot({
-                    animated: true, // does the popToRoot have transition animation or does it happen immediately (optional)
-                    animationType: 'fade', // 'fade' (for both) / 'slide-horizontal' (for android) does the popToRoot have different transition animation (optional)
-                });
-            } else {
-                let msg = store.getState().loginIn.status
-                // alert('登录失败，失败信息：' + msg)
-            }
+            // let success = store.getState().loginIn.isSuccess
+            // if (success === true) {
+            //     this.props.navigator.popToRoot({
+            //         animated: true, // does the popToRoot have transition animation or does it happen immediately (optional)
+            //         animationType: 'fade', // 'fade' (for both) / 'slide-horizontal' (for android) does the popToRoot have different transition animation (optional)
+            //     });
+            // }
 
         });
+    }
+
+     // 状态更新，判断是否登录并作出处理
+     shouldComponentUpdate(nextProps, nextState) {
+        // 登录完成,切成功登录
+        if (nextProps.status === '登录成功' && nextProps.isSuccess) {
+            this.props.navigator.popToRoot({
+                animated: true, // does the popToRoot have transition animation or does it happen immediately (optional)
+                animationType: 'fade', // 'fade' (for both) / 'slide-horizontal' (for android) does the popToRoot have different transition animation (optional)
+            });
+            return false;
+        }
+        return true;
     }
 
     requestForAuthCode(mobile, shouldStartCounting) {

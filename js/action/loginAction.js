@@ -2,6 +2,7 @@
 
 import * as types from '../constants/loginTypes'
 import storage from '../util/storage'
+import alert from '../util/utils';
 
 // 访问登录接口 根据返回结果来划分action属于哪个type,然后返回对象,给reducer处理
 export function login(isPassword, mobile, passwordOrAuthcode) {
@@ -33,6 +34,7 @@ export function login(isPassword, mobile, passwordOrAuthcode) {
             })
             .catch((error) => {
                 console.error(error);
+                alert('登录失败，失败信息：' + error)
             });
     }
 }
@@ -57,6 +59,7 @@ function loginSuccess(isSuccess, user) {
 
 function loginError(isSuccess, message) {
     console.log('error');
+    alert('登录失败，失败信息：' + message)
     return {
         type: types.LOGIN_IN_ERROR,
         msg: message
