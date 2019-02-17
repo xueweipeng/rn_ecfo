@@ -10,8 +10,10 @@ import AuthCodePage from './login/page/AuthCodePage';
 import PasswordPage from './login/page/PasswordPage';
 import FindPasswordPage from './login/page/FindPasswordPage';
 import SetPasswordPage from './login/page/SetPasswordPage';
+import SettingPage from './page/SettingPage';
 import { Provider } from 'react-redux';
 import configureStore from './reducers/configureStore';
+import CompanyPage from './page/CompanyPage';
 
 const store = configureStore();
 
@@ -25,7 +27,9 @@ export function registerScreens() {
     Navigation.registerComponent('Password', () => PasswordPage, store, Provider);
     Navigation.registerComponent('AuthCode', () => AuthCodePage, store, Provider);
     Navigation.registerComponent('FindPassword', () => FindPasswordPage, store, Provider);
-    Navigation.registerComponent('SetPassword', () => SetPasswordPage, store, Provider)
+    Navigation.registerComponent('SetPassword', () => SetPasswordPage, store, Provider);
+    Navigation.registerComponent('Setting', () => SettingPage, store, Provider); 
+    Navigation.registerComponent('About', () => CompanyPage, store, Provider);
   }
 
   export default store

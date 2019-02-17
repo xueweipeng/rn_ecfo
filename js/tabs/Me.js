@@ -60,10 +60,7 @@ export default class Me extends Component {
                 break;
 
             case 3:  //read articles
-                this.props.navigator.push({
-                    screen: 'Personal',
-                    title: '我的',
-                });
+                this._alert();
                 break;
 
             case 4:  //tags
@@ -75,7 +72,10 @@ export default class Me extends Component {
                 break;
 
             case 6: {  //setting
-                this._alert();
+                this.props.navigator.push({
+                    screen: 'Setting',
+                    title: '设置',
+                });
                 break;
             }
         }
@@ -96,14 +96,14 @@ export default class Me extends Component {
     _alert() {
         if (Platform.OS === 'android') {
             Alert.alert(
-                'Message',
-                "This function currently isn't available",
+                '敬请期待',
+                '',
                 [{ text: 'OK', onPress: () => { } }]
             );
         } else if (Platform.OS === 'ios') {
             AlertIOS.alert(
-                'Message',
-                "This function currently isn't available",
+                '敬请期待',
+                '',
                 [{ text: 'OK', onPress: () => { } }]
             );
         }
@@ -161,12 +161,12 @@ export default class Me extends Component {
                         </TouchableOpacity>
                     }
                     <View style={styles.list}>
-                        <Item icon="md-heart" text="我的收藏" subText="15篇" iconColor="#cd3232" onPress={this._onPressCallback.bind(this, 2)} />
-                        <Item icon="md-eye" text="阅读过的文章" subText="15篇" onPress={this._onPressCallback.bind(this, 3)} />
-                        <Item icon="md-card" text="标签管理" subText="9个" onPress={this._onPressCallback.bind(this, 4)} />
+                        <Item icon="md-heart" text="我的收藏" subText="" iconColor="#cd3232" onPress={this._onPressCallback.bind(this, 2)} />
+                        <Item icon="md-eye" text="阅读过的文章" subText="" onPress={this._onPressCallback.bind(this, 3)} />
+                        <Item icon="md-card" text="标签管理" subText="" onPress={this._onPressCallback.bind(this, 4)} />
                     </View>
                     <View style={styles.list}>
-                        <Item icon="md-ribbon" text="掘金排名" iconColor="#ff4500" onPress={this._onPressCallback.bind(this, 5)} />
+                        {/* <Item icon="md-ribbon" text="掘金排名" iconColor="#ff4500" onPress={this._onPressCallback.bind(this, 5)} /> */}
                         <Item icon="md-settings" text="设置" onPress={this._onPressCallback.bind(this, 6)} />
                     </View>
                 </ScrollView>
