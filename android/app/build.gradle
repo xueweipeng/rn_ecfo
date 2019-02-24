@@ -146,6 +146,8 @@ dependencies {
     api project(':react-native-vector-icons')
     api project(':react-native-splash-screen')
     api project(':react-native-navigation')
+    api project(':react-native-image-picker')
+    api project(':rn-actionsheet-module')
 
 //    api project(':react-native-splash-screen')
 //    api project(':react-native-vector-icons')

@@ -6,6 +6,30 @@ import px2dp from '../util/px2dp'
 import Avatar from '../component/Avatar'
 import RBSheet from 'react-native-raw-bottom-sheet'
 import ActionSheet from 'rn-actionsheet-module'
+import ImagePicker from 'react-native-image-picker';
+
+const options = {
+    title: '选择图片',
+    cancelButtonTitle: '取消',
+    takePhotoButtonTitle: '拍照',
+    chooseFromLibraryButtonTitle: '图片库',
+    cameraType: 'back',
+    mediaType: 'photo',
+    videoQuality: 'high',
+    durationLimit: 10,
+    maxWidth: 600,
+    maxHeight: 600,
+    aspectX: 2,
+    aspectY: 1,
+    quality: 0.8,
+    angle: 0,
+    allowsEditing: false,
+    noData: false,
+    storageOptions: {
+        skipBackup: true,
+        path: 'images'
+    }
+};
 
 export default class IndividualPage extends Component {
     constructor(props) {
@@ -18,6 +42,7 @@ export default class IndividualPage extends Component {
             birth_year: '1990',
             education: '博士',
             industry: '互联网',
+            fromLocal: false
         }
     }
 
@@ -45,39 +70,88 @@ export default class IndividualPage extends Component {
     _onAvatarPress() {
         // log.info('avatar clicked')
         // this.RBSheet.open()
-        ActionSheet(
-            {
-               title             : "选择上传头像方式",
-               optionsIOS        : ["Cancel", "从相册选择", "拍照"],
-               optionsAndroid        : ["从相册选择", "拍照"],
-               destructiveButtonIndex: null, // undefined // 1, 2, etc.,
-               cancelButtonIndex     : 0, // 
-               onCancelAndroidIndex: 3 // android doesn't need any cancel option but back button or outside click will return onCancelAndroidIndex
-            }, (index) => {
-             switch (index) {
-              case Platform.OS === "ios" ? 1 : 0 :{
-                this._onPressSelect()
-              }
-              case Platform.OS === "ios" ? 2 : 1 :{
-                this._onPressCapture()
-              }
-              case Platform.OS === "ios" ? 0 : 3 :{
-                //cancel
-              }
-              default:{
+        // ActionSheet(
+        //     {
+        //        title             : "选择上传头像方式",
+        //        optionsIOS        : ["Cancel", "从相册选择", "拍照"],
+        //        optionsAndroid        : ["从相册选择", "拍照"],
+        //        destructiveButtonIndex: null, // undefined // 1, 2, etc.,
+        //        cancelButtonIndex     : 0, // 
+        //        onCancelAndroidIndex: 3 // android doesn't need any cancel option but back button or outside click will return onCancelAndroidIndex
+        //     }, (index) => {
+        //      switch (index) {
+        //       case Platform.OS === "ios" ? 1 : 0 :{
+        //         this._onPressSelect()
+        //       }
+        //       case Platform.OS === "ios" ? 2 : 1 :{
+        //         this._onPressCapture()
+        //       }
+        //       case Platform.OS === "ios" ? 0 : 3 :{
+        //         //cancel
+        //       }
+        //       default:{
 
-              }
-             }
-            }
-        )
+        //       }
+        //      }
+        //     }
+        // )
+        this._onPressSelect()
     }
 
-    _onPressCapture() {
+    // _onPressCapture() {
+    //     ImagePicker.launchCamera(options, (response) => {
+    //         const source = { uri: response.uri };
 
-    }
+    //           // You can also display the image using data:
+    //           // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+    //           this.setState({
+    //             avatar: source,
+    //           });
+    //       });
+    // }
 
     _onPressSelect() {
+        ImagePicker.showImagePicker(options, (response) => {
+            console.log('Response = ', response);
+            if (response.didCancel) {
+                console.log('User cancelled image picker');
+            } else if (response.error) {
+                console.log('ImagePicker Error: ', response.error);
+            } else if (response.customButton) {
+                console.log('User tapped custom button: ', response.customButton);
+            } else {
+                let source;
+                if (Platform.OS === 'android') {
+                    source = { uri: response.uri, isStatic: true }
+                } else {
+                    source = { uri: response.uri.replace('file://', ''), isStatic: true }
+                }
+                // You can also display the image using data:
+                // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+                this.setState({
+                    avatar: source,
+                    fromLocal: true,
+                });
+                let file;
+                if (Platform.OS === 'android') {
+                    file = response.uri
+                } else {
+                    file = response.uri.replace('file://', '')
+                }
 
+
+                // this.setState({
+                //     loading:true
+                // });
+                // this.props.onFileUpload(file,response.fileName||'未命名文件.jpg')
+                // .then((result)=>{
+                //     this.setState({
+                //         loading:false
+                //     })
+                // })
+            }
+        });
     }
 
     _onPressCancel() {
@@ -92,7 +166,7 @@ export default class IndividualPage extends Component {
                 <ScrollView>
                     <TouchableOpacity onPress={this._onAvatarPress.bind(this)}>
                         <View style={styles.avatar}>
-                            <Avatar image={source = { uri: this.state.avatar }} size={px2dp(55)} textSize={px2dp(20)} />
+                            <Avatar image={source = this.state.fromLocal ? this.state.avatar : {uri : this.state.avatar}} size={px2dp(55)} textSize={px2dp(20)} />
                         </View>
                     </TouchableOpacity>
                     <View style={styles.list}>

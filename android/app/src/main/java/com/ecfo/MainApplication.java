@@ -2,17 +2,17 @@ package com.ecfo;
 
 import android.app.Application;
 
-import com.ecfo.actionsheet.RNActionsheetPackage;
 import com.facebook.react.ReactApplication;
+import com.imagepicker.ImagePickerPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.reactnativenavigation.bridge.NavigationReactPackage;
-import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.reactnativenavigation.NavigationApplication;
+import com.taluttasgiran.actionsheet.RNActionsheetPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,11 +41,12 @@ public class MainApplication extends NavigationApplication implements ReactAppli
     // No need to add RnnPackage and MainReactPackage
     return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+            new ImagePickerPackage(),
+            new RNActionsheetPackage(),
             new ReactVideoPackage(),
             new VectorIconsPackage(),
             new SplashScreenReactPackage(),
-            new NavigationReactPackage(),
-            new RNActionsheetPackage()
+            new NavigationReactPackage()
     );
   }
 

@@ -28,7 +28,8 @@
     "react-native-storage": "^0.2.2",
     "redux-thunk": "^2.2.0",
     "react-native-raw-bottom-sheet": "1.1.0",
-    "rn-actionsheet-module": "0.2.2"
+    "rn-actionsheet-module": "0.2.2",
+    "react-native-image-picker": "0.28.0"
   },
   "devDependencies": {
     "babel-jest": "23.0.0",
