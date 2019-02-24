@@ -2,6 +2,7 @@ package com.ecfo;
 
 import android.app.Application;
 
+import com.ecfo.actionsheet.RNActionsheetPackage;
 import com.facebook.react.ReactApplication;
 import com.brentvatne.react.ReactVideoPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -43,10 +44,8 @@ public class MainApplication extends NavigationApplication implements ReactAppli
             new ReactVideoPackage(),
             new VectorIconsPackage(),
             new SplashScreenReactPackage(),
-            new NavigationReactPackage()
-        // new SplashScreenReactPackage(),
-//        new ReactVideoPackage(),
-//        new VectorIconsPackage()
+            new NavigationReactPackage(),
+            new RNActionsheetPackage()
     );
   }
 

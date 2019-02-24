@@ -95,13 +95,13 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 27
     buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.ecfo"
         minSdkVersion 19
-        targetSdkVersion 25
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         ndk {
@@ -139,12 +139,13 @@ android {
 
 dependencies {
     api fileTree(dir: "libs", include: ["*.jar"])
-    api "com.android.support:appcompat-v7:25.0.1"
+    api "com.android.support:appcompat-v7:27.1.1"
+    implementation "com.android.support:design:27.1.1"
     api "com.facebook.react:react-native:+"  // From node_modules
-    compile project(':react-native-video')
-    compile project(':react-native-vector-icons')
-    compile project(':react-native-splash-screen')
-    compile project(':react-native-navigation')
+    api project(':react-native-video')
+    api project(':react-native-vector-icons')
+    api project(':react-native-splash-screen')
+    api project(':react-native-navigation')
 
 //    api project(':react-native-splash-screen')
 //    api project(':react-native-vector-icons')

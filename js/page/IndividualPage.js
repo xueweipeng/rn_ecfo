@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ReactNative, { Text, View, StyleSheet, Platform, ScrollView, TouchableOpacity, ListView, Image, PixelRatio, BackAndroid } from 'react-native';
-import NavigationBar from '../component/SimpleNavigationBar';
-import TextButton from '../component/TextButton';
+import { Text, View, StyleSheet, Platform, ScrollView, TouchableOpacity, ListView, Image, PixelRatio, BackAndroid, NativeModules } from 'react-native';
 import theme from '../config/theme'
 import px2dp from '../util/px2dp'
 import Avatar from '../component/Avatar'
+import RBSheet from 'react-native-raw-bottom-sheet'
+import ActionSheet from 'rn-actionsheet-module'
 
 export default class IndividualPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            avatar:'http://www.ecfo.com.cn/img2/elevenV.png',
-            nick_name:'ecfo',
-            signature:'hello',
-            sex:'male',
-            birth_year:'1990',
-            education:'博士',
-            industry:'互联网',
+            avatar: 'http://www.ecfo.com.cn/img2/elevenV.png',
+            nick_name: 'ecfo',
+            signature: 'hello',
+            sex: 'male',
+            birth_year: '1990',
+            education: '博士',
+            industry: '互联网',
         }
     }
 
@@ -44,6 +44,44 @@ export default class IndividualPage extends Component {
 
     _onAvatarPress() {
         // log.info('avatar clicked')
+        // this.RBSheet.open()
+        ActionSheet(
+            {
+               title             : "选择上传头像方式",
+               optionsIOS        : ["Cancel", "从相册选择", "拍照"],
+               optionsAndroid        : ["从相册选择", "拍照"],
+               destructiveButtonIndex: null, // undefined // 1, 2, etc.,
+               cancelButtonIndex     : 0, // 
+               onCancelAndroidIndex: 3 // android doesn't need any cancel option but back button or outside click will return onCancelAndroidIndex
+            }, (index) => {
+             switch (index) {
+              case Platform.OS === "ios" ? 1 : 0 :{
+                this._onPressSelect()
+              }
+              case Platform.OS === "ios" ? 2 : 1 :{
+                this._onPressCapture()
+              }
+              case Platform.OS === "ios" ? 0 : 3 :{
+                //cancel
+              }
+              default:{
+
+              }
+             }
+            }
+        )
+    }
+
+    _onPressCapture() {
+
+    }
+
+    _onPressSelect() {
+
+    }
+
+    _onPressCancel() {
+        // this.RBSheet.close()
     }
 
     render() {
@@ -54,7 +92,7 @@ export default class IndividualPage extends Component {
                 <ScrollView>
                     <TouchableOpacity onPress={this._onAvatarPress.bind(this)}>
                         <View style={styles.avatar}>
-                            <Avatar image={source={uri: this.state.avatar}} size={px2dp(55)} textSize={px2dp(20)} />
+                            <Avatar image={source = { uri: this.state.avatar }} size={px2dp(55)} textSize={px2dp(20)} />
                         </View>
                     </TouchableOpacity>
                     <View style={styles.list}>
@@ -68,7 +106,29 @@ export default class IndividualPage extends Component {
                         <Item text="行业" subText={this.state.industry} textColor="#000000" onPress={this._onPressCallback.bind(this, 7)} />
                     </View>
                 </ScrollView>
-
+                {/*此控件可用于自定义底部对话框的布局（如选择性别）*/}
+                {/* <RBSheet
+                    ref={ref => {
+                        this.RBSheet = ref;
+                    }}
+                    height={120}
+                    duration={250}
+                    customStyles={{
+                        container: {
+                            justifyContent: "center",
+                            alignItems: "center"
+                        }
+                    }}>
+                    <TouchableOpacity onPress={this._onPressCapture.bind(this)}>
+                        <Text style={{ color: '#000000', fontSize: px2dp(20), marginTop: 5, marginBottom:5 }}>拍照</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this._onPressSelect.bind(this)}>
+                        <Text style={{ color: '#000000', fontSize: px2dp(20), margin: 5, marginBottom:5 }}>从相册选择</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={this._onPressCancel.bind(this)}>
+                        <Text style={{ color: '#000000', fontSize: px2dp(20), margin: 5, marginBottom:5 }}>取消</Text>
+                    </TouchableOpacity>
+                </RBSheet> */}
             </View>
         );
     }
@@ -92,7 +152,7 @@ class Item extends Component {
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.listItem}>
                     <Text style={{ color: textColor, fontSize: px2dp(15) }}>{text}</Text>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', marginRight: px2dp(15)}}>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', marginRight: px2dp(15) }}>
                         <Text style={{ color: this.props.textColor }}>{subText}</Text>
                     </View>
                 </View>
