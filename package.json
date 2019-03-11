@@ -29,7 +29,10 @@
     "redux-thunk": "^2.2.0",
     "react-native-raw-bottom-sheet": "1.1.0",
     "rn-actionsheet-module": "0.2.2",
-    "react-native-image-picker": "0.28.0"
+    "react-native-image-picker": "0.28.0",
+    "react-native-popup-dialog": "^0.17.0",
+    "react-native-pickers": "^2.0.0",
+    "react-native-svg": "^9.2.4"
   },
   "devDependencies": {
     "babel-jest": "23.0.0",
