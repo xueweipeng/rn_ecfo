@@ -81,11 +81,11 @@ export default class SettingPage extends Component {
         return (
             <View style={styles.container}>
                 <ScrollView>
-                    {/* <View style={styles.list}> */}
-                    <Item icon="md-contacts" text="关于我们" textColor="black" onPress={this._onPressCallback.bind(this, 6)} />
-                    <Item icon="md-pulse" text="检查升级" textColor="black" onPress={this._onPressCallback.bind(this, 5)} />
-                    <Item icon="md-exit" text="退出登录" textColor="orange" onPress={this._onPressCallback.bind(this, 4)} />
-                    {/* </View> */}
+                    <View style={styles.list}>
+                        <Item icon="md-contacts" text="关于我们" textColor="black" onPress={this._onPressCallback.bind(this, 6)} />
+                        <Item icon="md-pulse" text="检查升级" textColor="black" onPress={this._onPressCallback.bind(this, 5)} />
+                        <Item icon="md-exit" text="退出登录" textColor="orange" onPress={this._onPressCallback.bind(this, 4)} />
+                    </View>
                 </ScrollView>
             </View>
         );
@@ -115,7 +115,7 @@ class Item extends Component {
                     <Icon name={icon} size={px2dp(22)} color={iconColor} />
                     <Text style={{ color: textColor, fontSize: px2dp(15), marginLeft: px2dp(20) }}>{text}</Text>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                        <Text style={{color: subTextColor}}>{subText}</Text>
+                        <Text style={{ color: subTextColor }}>{subText}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
