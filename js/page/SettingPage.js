@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ReactNative, {
     AppRegistry,
@@ -16,7 +16,8 @@ import ReactNative, {
     Platform,
     PixelRatio,
     Alert,
-    AlertIOS} from 'react-native';
+    AlertIOS
+} from 'react-native';
 import NavigationBar from '../component/SimpleNavigationBar';
 import TextButton from '../component/TextButton';
 
@@ -28,8 +29,8 @@ import storage from '../util/storage'
 import store from '../screens'
 
 //设置页面
-export default class SettingPage extends Component{
-    constructor(props){
+export default class SettingPage extends Component {
+    constructor(props) {
         super(props);
     }
 
@@ -51,10 +52,10 @@ export default class SettingPage extends Component{
                 break;
 
             case 3:  //read articles
-                
+
                 break;
 
-            case 4:  //tags
+            case 4:  //quit
 
                 break;
 
@@ -81,8 +82,9 @@ export default class SettingPage extends Component{
             <View style={styles.container}>
                 <ScrollView>
                     {/* <View style={styles.list}> */}
-                        <Item icon="md-contacts" text="关于我们" onPress={this._onPressCallback.bind(this, 6)} />
-                        <Item icon="md-pulse" text="检查升级" onPress={this._onPressCallback.bind(this, 5)} />
+                    <Item icon="md-contacts" text="关于我们" textColor="black" onPress={this._onPressCallback.bind(this, 6)} />
+                    <Item icon="md-pulse" text="检查升级" textColor="black" onPress={this._onPressCallback.bind(this, 5)} />
+                    <Item icon="md-exit" text="退出登录" textColor="orange" onPress={this._onPressCallback.bind(this, 4)} />
                     {/* </View> */}
                 </ScrollView>
             </View>
@@ -95,6 +97,8 @@ class Item extends Component {
         icon: PropTypes.string.isRequired,
         iconColor: PropTypes.string,
         text: PropTypes.string.isRequired,
+        textColor: PropTypes.string,
+        subTextColor: PropTypes.string,
         subText: PropTypes.string,
         onPress: PropTypes.func
     }
@@ -104,14 +108,14 @@ class Item extends Component {
     }
 
     render() {
-        const { icon, iconColor, text, subText, onPress } = this.props;
+        const { icon, iconColor, text, textColor, subTextColor, subText, onPress } = this.props;
         return (
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.listItem}>
                     <Icon name={icon} size={px2dp(22)} color={iconColor} />
-                    <Text style={{ color: 'black', fontSize: px2dp(15), marginLeft: px2dp(20) }}>{text}</Text>
+                    <Text style={{ color: textColor, fontSize: px2dp(15), marginLeft: px2dp(20) }}>{text}</Text>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                        <Text style={{ color: "#ccc" }}>{subText}</Text>
+                        <Text style={{color: subTextColor}}>{subText}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
