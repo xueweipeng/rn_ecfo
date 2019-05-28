@@ -30,8 +30,9 @@ export default class Me extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name : '未登录',
-            hasLogin: false
+            name: '未登录',
+            hasLogin: false,
+            avatar: ''
         };
     }
     _onPressCallback(position) {
@@ -48,7 +49,7 @@ export default class Me extends Component {
                         title: '登录',
                     });
                 }
-                
+
                 break;
 
             case 1:  // add occupation
@@ -118,7 +119,8 @@ export default class Me extends Component {
             if (ret && ret.token) {
                 this.setState({
                     name: ret.name,
-                    hasLogin: true
+                    hasLogin: true,
+                    avatar: ret.avatar
                 })
             }
         }).catch(err => {
@@ -136,7 +138,8 @@ export default class Me extends Component {
                     {Platform.OS === 'android' ?
                         <TouchableOpacity onPress={this._onPressCallback.bind(this, 0)}>
                             <View style={styles.intro}>
-                                <Avatar image={require('../image/logo_og.png')} size={px2dp(55)} textSize={px2dp(20)} />
+                                {/* 设置头像后要同步过来 */}
+                                <Avatar image={source = this.state.hasLogin ?  { uri: this.state.avatar } : require('../image/logo_og.png')} size={px2dp(55)} textSize={px2dp(20)} />
                                 <View style={{ marginLeft: px2dp(12) }}>
                                     <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>{this.state.name}</Text>
                                     {/* <TextButton text="添加职位 @添加公司" color="#949494" fontSize={px2dp(13)} onPress={this._onPressCallback.bind(this, 1)} /> */}
@@ -149,7 +152,7 @@ export default class Me extends Component {
                         :
                         <TouchableOpacity onPress={this._onPressCallback.bind(this, 0)} activeOpacity={theme.btnActiveOpacity}>
                             <View style={styles.intro}>
-                                <Avatar image={require('../image/logo_og.png')} size={px2dp(55)} textSize={px2dp(20)} />
+                                <Avatar image={source = this.state.hasLogin ?  { uri: this.state.avatar } : require('../image/logo_og.png')} size={px2dp(55)} textSize={px2dp(20)} />
                                 <View style={{ marginLeft: px2dp(12) }}>
                                     <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>{this.state.name}</Text>
                                     {/* <TextButton text="添加职位 @添加公司" color="#949494" fontSize={px2dp(13)} onPress={this._onPressCallback.bind(this, 1)} /> */}
