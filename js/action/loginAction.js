@@ -39,6 +39,24 @@ export function login(isPassword, mobile, passwordOrAuthcode) {
     }
 }
 
+export function logout() {
+    console.log('退出登录')
+    return dispatch => {
+        dispatch(logout())
+    }
+}
+
+function logout() {
+    storage.save({
+        key: 'user',
+        data: {}
+    })
+    return {
+        type: types.LOGIN_OUT,
+        data: {}
+    }
+}
+
 function isLogining() {
     return {
         type: types.LOGIN_IN_DOING
@@ -50,7 +68,7 @@ function loginSuccess(isSuccess, user) {
     storage.save({
         key: 'user',
         data: user
-    });
+    })
     return {
         type: types.LOGIN_IN_DONE,
         user: user,

@@ -89,7 +89,7 @@ export default class Me extends Component {
     componentDidMount() {
         store.subscribe(() => {
             //监听state变化
-            console.log('me page state change ' + store.getState().loginIn.status);
+            console.log('me page state change ' + store.getState().loginReducer.status);
             this.checkHasLogin()
         });
     }
@@ -115,12 +115,18 @@ export default class Me extends Component {
             key: 'user',
             autoSync: false,
         }).then(ret => {
-            console.log('checkHasLogin:' + ret.token)
             if (ret && ret.token) {
+                console.log('checkHasLogin:' + ret.token)
                 this.setState({
                     name: ret.name,
                     hasLogin: true,
                     avatar: ret.avatar
+                })
+            } else {
+                this.setState({
+                    name: '未登录',
+                    hasLogin: false,
+                    avatar: ''
                 })
             }
         }).catch(err => {

@@ -93,8 +93,8 @@ class PasswordPage extends Component {
     componentDidMount() {
         store.subscribe(() => {
             //监听state变化
-            console.log('password page state change ' + store.getState().loginIn.status);
-            // let success = store.getState().loginIn.isSuccess
+            console.log('password page state change ' + store.getState().loginReducer.status);
+            // let success = store.getState().loginReducer.isSuccess
             // if (success === true) {
             //     this.props.navigator.popToRoot({
             //         animated: true, // does the popToRoot have transition animation or does it happen immediately (optional)
@@ -161,9 +161,9 @@ const styles = StyleSheet.create({
 
 export default connect(
     (store) => ({
-        status: store.loginIn.status,
-        isSuccess: store.loginIn.isSuccess,
-        user: store.loginIn.user,
+        status: store.loginReducer.status,
+        isSuccess: store.loginReducer.isSuccess,
+        user: store.loginReducer.user,
     })
     ,
     (dispatch) => ({

@@ -27,11 +27,26 @@ import px2dp from '../util/px2dp'
 import Avatar from '../component/Avatar'
 import storage from '../util/storage'
 import store from '../screens'
+import { connect } from 'react-redux' // 引入connect函数
+import * as loginAction from '../action/loginAction'// 导入action方法
 
 //设置页面
-export default class SettingPage extends Component {
+class SettingPage extends Component {
     constructor(props) {
         super(props);
+    }
+
+    // 状态更新，判断是否登录并作出处理
+    shouldComponentUpdate(nextProps, nextState) {
+        // 登录完成,切成功登录
+        if (nextProps.status === '退出成功') {
+            this.props.navigator.popToRoot({
+                animated: true, // does the popToRoot have transition animation or does it happen immediately (optional)
+                animationType: 'fade', // 'fade' (for both) / 'slide-horizontal' (for android) does the popToRoot have different transition animation (optional)
+            });
+            return false;
+        }
+        return true;
     }
 
     _handleBack() {
@@ -56,7 +71,8 @@ export default class SettingPage extends Component {
                 break;
 
             case 4:  //quit
-
+                const { logout } = this.props;
+                logout()
                 break;
 
             case 5:  //update
@@ -164,4 +180,15 @@ const styles = StyleSheet.create({
         borderBottomColor: '#c4c4c4',
         borderBottomWidth: 1 / PixelRatio.get()
     }
-});
+})
+
+export default connect(
+    (store) => ({
+        status: store.loginReducer.status,
+        user: store.loginReducer.user,
+    })
+    ,
+    (dispatch) => ({
+        logout: () => dispatch(loginAction.logout()),
+    })
+)(SettingPage)

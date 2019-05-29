@@ -31,18 +31,7 @@ export default class LoginPage extends Component {
         super(props);
         this.state = { message: '' };
     }
-
-    // 状态更新，判断是否登录并作出处理
-    shouldComponentUpdate(nextProps, nextState) {
-        // 登录完成,切成功登录
-        if (nextProps.status === '登陆成功' && nextProps.isSuccess) {
-            // this.props.navigation.dispatch(resetAction);
-            this.checkHasLogin();
-            return false;
-        }
-        return true;
-    }
-
+    
     requestForAuthCode(mobile) {
         fetch('http://localhost:8081/js/data/authCode.json?mobile=' + mobile)
 			.then((response) =>
@@ -156,14 +145,3 @@ const styles = StyleSheet.create({
         fontSize: 14
     }
 });
-
-connect(
-    (state) => ({
-        status: state.loginIn.status,
-        isSuccess: state.loginIn.isSuccess,
-        user: state.loginIn.user,
-    }),
-    (dispatch) => ({
-        login: (m, p) => dispatch(loginAction.login(m, p)),
-    })
-)(LoginPage)

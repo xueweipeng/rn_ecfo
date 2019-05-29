@@ -7,7 +7,7 @@ const initialState = {
     user: null,
 };
 
-export default function loginIn(state = initialState, action) {
+export default function loginReducer(state = initialState, action) {
     switch (action.type) {
         case types.LOGIN_IN_DOING:
             return {
@@ -29,6 +29,12 @@ export default function loginIn(state = initialState, action) {
                 status: action.msg,
                 isSuccess: false,
                 user: null,
+            };
+        case types.LOGIN_OUT:
+            return {
+                ...state,
+                status: '退出成功',
+                user: {}
             };
         default:
             console.log(state);
