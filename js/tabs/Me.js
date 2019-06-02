@@ -137,9 +137,9 @@ export default class Me extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={styles.actionBar}>
-                    <Text style={{ color: theme.actionBar.fontColor, fontSize: theme.actionBar.fontSize }}>我</Text>
-                </View>
+                {/* <View style={styles.actionBar}>
+                    <Text style={{ color: theme.actionBar.fontColor, fontSize: theme.actionBar.fontSize }}>我的</Text>
+                </View> */}
                 <ScrollView>
                     {Platform.OS === 'android' ?
                         <TouchableOpacity onPress={this._onPressCallback.bind(this, 0)}>
@@ -150,21 +150,21 @@ export default class Me extends Component {
                                     <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>{this.state.name}</Text>
                                     {/* <TextButton text="添加职位 @添加公司" color="#949494" fontSize={px2dp(13)} onPress={this._onPressCallback.bind(this, 1)} /> */}
                                 </View>
-                                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                                    <Icon name="ios-arrow-forward" color="#ccc" size={px2dp(30)} />
+                                <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', marginRight:18 }}>
+                                    <Icon name="ios-arrow-forward" color="#ffffff" size={px2dp(30)} />
                                 </View>
                             </View>
                         </TouchableOpacity>
                         :
                         <TouchableOpacity onPress={this._onPressCallback.bind(this, 0)} activeOpacity={theme.btnActiveOpacity}>
                             <View style={styles.intro}>
-                                <Avatar image={source = this.state.hasLogin ?  { uri: this.state.avatar } : require('../image/logo_og.png')} size={px2dp(55)} textSize={px2dp(20)} />
+                                <Avatar image={source = this.state.hasLogin ?  { uri: this.state.avatar } : require('../image/logo_og.png')} size={px2dp(57)} textSize={px2dp(20)} />
                                 <View style={{ marginLeft: px2dp(12) }}>
                                     <Text style={{ color: theme.text.color, fontSize: px2dp(20) }}>{this.state.name}</Text>
                                     {/* <TextButton text="添加职位 @添加公司" color="#949494" fontSize={px2dp(13)} onPress={this._onPressCallback.bind(this, 1)} /> */}
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                                    <Icon name="ios-arrow-forward" color="#ccc" size={px2dp(30)} />
+                                    <Icon name="ios-arrow-forward" color="#ffffff" size={px2dp(30)} />
                                 </View>
                             </View>
                         </TouchableOpacity>
@@ -226,16 +226,15 @@ const styles = StyleSheet.create({
         paddingTop: (Platform.OS === 'ios') ? px2dp(20) : 0,
     },
     intro: {
-        height: px2dp(100),
+        height: px2dp(216),
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#fff',
-        padding: px2dp(20),
-        borderTopWidth: 1 / PixelRatio.get(),
+        backgroundColor: '#faad27',
+        padding: px2dp(18),
+        // borderTopWidth: 1 / PixelRatio.get(),
         borderBottomWidth: 1 / PixelRatio.get(),
         borderBottomColor: '#c4c4c4',
         borderTopColor: '#e4e4e4',
-        marginTop: px2dp(10)
     },
     list: {
         flex: 1,

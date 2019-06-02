@@ -118,7 +118,7 @@ export default class Lesson extends Component {
 			}));
 			// let lesson = this.state.dataBlob[0].lesson
 			return (
-				<View style={{ flex: 1 }}>
+				<View style={{ flex: 1,backgroundColor:'white' }}>
 					{/* <FlatList
 						ref={(flatList) => this._flatList = flatList}
 						ListHeaderComponent={this._header}
@@ -150,9 +150,11 @@ export default class Lesson extends Component {
 			<TouchableOpacity
 				onPress={this._onItemClick.bind(this, item)}>
 				<View style={{ flex: 1, flexDirection: 'row' }}>
-					<Image source={{ uri: item.item.pic }} style={{ width: 70, height: 100, margin: 10 }}></Image>
-					<View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch' }}>
+					<Image source={{ uri: item.item.pic }} style={{ width: 60, height: 60, marginTop: 16, marginBottom:16,marginLeft:13,marginRight:13 }}></Image>
+					<View style={{ flexDirection: 'column', justifyContent: 'space-around', alignItems: 'stretch',marginTop:15,marginBottom:15 }}>
 						<Text style={styles.title}>{item.item.lessonTitle}</Text>
+						<Text style={styles.teacher}>解读人:{item.item.lessonTeacher}</Text>
+						<Text style={styles.teacher}>{item.item.lessonList.length}集</Text>
 					</View>
 				</View>
 
@@ -165,23 +167,23 @@ export default class Lesson extends Component {
 	}
 
 	_separator = () => {
-		return <View style={{ height: 2, backgroundColor: 'gray' }} />;
+		return <View style={{ height: 1, backgroundColor: '#dedede', marginLeft:13, marginRight:13 }} />;
 	}
 
-	_renderLessonItem = (item) => {
-		return (
-			<TouchableOpacity
-				onPress={this._onItemClick.bind(this, item)}>
-				<View style={{ flex: 1, flexDirection: 'row' }}>
-					<Image source={{ uri: item.item.pic }} style={{ width: 70, height: 100, margin: 10 }}></Image>
-					<View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch' }}>
-						<Text style={styles.title}>{item.item.lessonTitle}</Text>
-					</View>
-				</View>
+	// _renderLessonItem = (item) => {
+	// 	return (
+	// 		<TouchableOpacity
+	// 			onPress={this._onItemClick.bind(this, item)}>
+	// 			<View style={{ flex: 1, flexDirection: 'row' }}>
+	// 				<Image source={{ uri: item.item.pic }} style={{ width: 70, height: 100, margin: 10 }}></Image>
+	// 				<View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch' }}>
+	// 					<Text style={styles.title}>{item.item.lessonTitle}</Text>
+	// 				</View>
+	// 			</View>
 
-			</TouchableOpacity>
-		)
-	}
+	// 		</TouchableOpacity>
+	// 	)
+	// }
 
 	_onItemClick = (item) => {
 		this.props.navigator.push({
@@ -255,17 +257,28 @@ const styles = StyleSheet.create({
 	txt: {
 		textAlign: 'left',
 		textAlignVertical: 'center',
-		color: 'black',
-		fontSize: 30,
+		color: '#333333',
+		fontSize: 18,
+		marginLeft:8,
+		marginTop:16,
+		marginBottom:12,
 		backgroundColor: 'white'
 	},
 	title: {
 		textAlign: 'left',
 		textAlignVertical: 'center',
-		color: 'black',
-		fontSize: 30,
+		color: '#333333',
+		fontSize: 13,
 		width: Dimensions.get('window').width - 100,
-		marginRight: 20
+		marginRight: 13
+	},
+	teacher: {
+		textAlign: 'left',
+		textAlignVertical: 'center',
+		color: '#999999',
+		fontSize: 11,
+		width: Dimensions.get('window').width - 100,
+		marginRight: 13
 	},
 	content: {
 		textAlign: 'left',

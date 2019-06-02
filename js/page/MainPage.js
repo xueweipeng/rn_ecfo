@@ -56,18 +56,18 @@ export default class MainPage extends Component {
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'lesson'}
                     title="课程"
-                    selectedTitleStyle={{ color: "#3496f0" }}
+                    selectedTitleStyle={{ color: "#faad27" }}
                     renderIcon={() => <Icon name="book" size={px2dp(22)} color="#666" />}
-                    renderSelectedIcon={() => <Icon name="book" size={px2dp(22)} color="#3496f0" />}
+                    renderSelectedIcon={() => <Icon name="book" size={px2dp(22)} color="#faad27" />}
                     onPress={() => this.setState({ selectedTab: 'lesson' })}>
                     {<Lesson navigator={this.props.navigator} />}
                 </TabNavigator.Item>
                 <TabNavigator.Item
                     selected={this.state.selectedTab === 'me'}
                     title="我的"
-                    selectedTitleStyle={{ color: "#3496f0" }}
+                    selectedTitleStyle={{ color: "#faad27" }}
                     renderIcon={() => <Icon name="user" size={px2dp(22)} color="#666" />}
-                    renderSelectedIcon={() => <Icon name="user" size={px2dp(22)} color="#3496f0" />}
+                    renderSelectedIcon={() => <Icon name="user" size={px2dp(22)} color="#faad27" />}
                     onPress={() => this.setState({ selectedTab: 'me' })}>
                     {/* <将导航组件对象设置给使用该对象的组件/> */}
                     {<Me navigator={this.props.navigator} />} 

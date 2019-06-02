@@ -15,13 +15,13 @@ export default {
     btnActiveOpacity: 0.7,
     actionBar: {
         height: (Platform.OS === 'android') ? px2dp(49) : px2dp(69),
-        backgroundColor: 'rgb(22,131,251)',
+        backgroundColor: '#faad27',
         fontSize: px2dp(16),
         fontColor: 'white'
     },
     text: {
-        color: globalTextColor,
-        fontSize: px2dp(15)
+        color: '#ffffff',
+        fontSize: px2dp(20)
     },
     scrollView: {
         fontSize: px2dp(15),
