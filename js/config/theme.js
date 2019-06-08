@@ -9,7 +9,7 @@ const globalTextColor = '#000';
 export default {
     screenWidth: Dimensions.get('window').width,
     screenHeight: Dimensions.get('window').height,
-    themeColor: 'rgb(22,131,251)',
+    themeColor: '#faad27',
     pageBackgroundColor: '#f4f4f4',
     grayColor: '#c4c4c4',
     btnActiveOpacity: 0.7,

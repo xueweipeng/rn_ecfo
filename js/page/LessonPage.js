@@ -81,7 +81,7 @@ export default class LessonPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{flexDirection: 'row' }}>
+                <View style={{flexDirection: 'row' ,backgroundColor: theme.themeColor}}>
 					<Image source={{ uri: this.props.picUrl }} style={{ width: px2dp(90), height: px2dp(90), marginTop: 16, marginBottom:16,marginLeft:13,marginRight:13 }}></Image>
 					<View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch',marginTop:15,marginBottom:15}}>
 						<Text style={styles.pageTitle}>{this.props.title}</Text>
@@ -147,9 +147,9 @@ const styles = StyleSheet.create({
     pageTitle: {
         textAlign: 'left',
 		textAlignVertical: 'center',
-		color: '#333333',
+		color: '#FFFFFF',
         fontSize: 13,
-        marginBottom: px2dp(10),
+        marginBottom: px2dp(15),
 		width: Dimensions.get('window').width - 100,
 		marginRight: 13
     },
@@ -164,8 +164,8 @@ const styles = StyleSheet.create({
 	teacher: {
 		textAlign: 'left',
 		textAlignVertical: 'center',
-		color: '#999999',
-        fontSize: 11,
+		color: '#FFFFFF',
+        fontSize: px2dp(10),
         alignItems:'center',
 		width: Dimensions.get('window').width - 100,
 		marginRight: 13

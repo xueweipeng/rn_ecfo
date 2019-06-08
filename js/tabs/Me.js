@@ -229,7 +229,7 @@ const styles = StyleSheet.create({
         height: px2dp(216),
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#faad27',
+        backgroundColor: theme.themeColor,
         padding: px2dp(18),
         // borderTopWidth: 1 / PixelRatio.get(),
         borderBottomWidth: 1 / PixelRatio.get(),
