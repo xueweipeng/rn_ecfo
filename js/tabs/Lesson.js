@@ -102,15 +102,15 @@ export default class Lesson extends Component {
 	}
 
 	_renderListView() {
-		
+
 		// for (var i = 0; i < this.state.dataBlob.length; i++) {
-			// var datas = [];
-			// for (var j = 0; j < 10; j++) {
-			// 	datas.push({ title: 'title:' + j });
-			// }
+		// var datas = [];
+		// for (var j = 0; j < 10; j++) {
+		// 	datas.push({ title: 'title:' + j });
+		// }
 		// 	sections.push({ key: i, data: this.state.dataBlob });
 		// }
-		
+
 		if (!this.state.refreshing || this.state.loadedData) {
 			var sections = this.state.dataBlob.map(row => ({
 				lessonType: row.lessonType,
@@ -118,7 +118,7 @@ export default class Lesson extends Component {
 			}));
 			// let lesson = this.state.dataBlob[0].lesson
 			return (
-				<View style={{ flex: 1,backgroundColor:'white' }}>
+				<View style={{ flex: 1, backgroundColor: 'white' }}>
 					{/* <FlatList
 						ref={(flatList) => this._flatList = flatList}
 						ListHeaderComponent={this._header}
@@ -131,7 +131,7 @@ export default class Lesson extends Component {
 					<SectionList
 						renderSectionHeader={this.renderHeader}
 						renderItem={this.renderItem}
-						sections={sections} 
+						sections={sections}
 						ItemSeparatorComponent={this._separator}
 						refreshing={false}
 						keyExtractor={(item, index) => item + index} />
@@ -150,8 +150,8 @@ export default class Lesson extends Component {
 			<TouchableOpacity
 				onPress={this._onItemClick.bind(this, item)}>
 				<View style={{ flex: 1, flexDirection: 'row' }}>
-					<Image source={{ uri: item.item.pic }} style={{ width: 60, height: 60, marginTop: 16, marginBottom:16,marginLeft:13,marginRight:13 }}></Image>
-					<View style={{ flexDirection: 'column', justifyContent: 'space-around', alignItems: 'stretch',marginTop:15,marginBottom:15 }}>
+					<Image source={{ uri: item.item.pic }} style={{ width: 60, height: 60, marginTop: 16, marginBottom: 16, marginLeft: 13, marginRight: 13 }}></Image>
+					<View style={{ flexDirection: 'column', justifyContent: 'space-around', alignItems: 'stretch', marginTop: 15, marginBottom: 15 }}>
 						<Text style={styles.title}>{item.item.lessonTitle}</Text>
 						<Text style={styles.teacher}>解读人:{item.item.lessonTeacher}</Text>
 						<Text style={styles.teacher}>{item.item.lessonList.length}集</Text>
@@ -167,7 +167,7 @@ export default class Lesson extends Component {
 	}
 
 	_separator = () => {
-		return <View style={{ height: 1, backgroundColor: '#dedede', marginLeft:13, marginRight:13 }} />;
+		return <View style={{ height: 1, backgroundColor: '#dedede', marginLeft: 13, marginRight: 13 }} />;
 	}
 
 	// _renderLessonItem = (item) => {
@@ -188,10 +188,11 @@ export default class Lesson extends Component {
 	_onItemClick = (item) => {
 		this.props.navigator.push({
 			screen: 'LessonPage',
-			title: item.item.lessonTitle,
 			passProps: {
 				lessonList: item.item.lessonList,
-				picUrl: item.item.pic
+				picUrl: item.item.pic,
+				title: item.item.lessonTitle,
+				teacher: item.item.lessonTeacher,
 			}
 		});
 	}
@@ -259,9 +260,9 @@ const styles = StyleSheet.create({
 		textAlignVertical: 'center',
 		color: '#333333',
 		fontSize: 18,
-		marginLeft:8,
-		marginTop:16,
-		marginBottom:12,
+		marginLeft: 8,
+		marginTop: 16,
+		marginBottom: 12,
 		backgroundColor: 'white'
 	},
 	title: {

@@ -19,18 +19,22 @@ export default class LessonPage extends Component {
     }
 
     _header = () => {
-        return <Text style={[styles.txt, { backgroundColor: 'gray' }]}>课程详情</Text>;
+        return <Text style={styles.txt}>总共{this.props.lessonList.length}集</Text>;
     }
 
     _separator = () => {
-        return <View style={{ height: 1, backgroundColor: 'gray' }} />;
+        return <View style={{ height: px2dp(0.5), backgroundColor: '#dedede' }} />;
     }
 
     _renderItem = (item) => {
         return (
             <TouchableOpacity
                 onPress={this._onItemClick.bind(this, item)}>
-                <Text style={styles.title}>{item.item.name}</Text>
+                <View style={styles.item}>
+                    <Text style={styles.title}>{item.item.name}</Text>
+                    <Text style={styles.subTitle}>{item.item.length}</Text>
+                </View>
+
             </TouchableOpacity>
         )
     }
@@ -51,7 +55,7 @@ export default class LessonPage extends Component {
                 lessonPic: this.props.picUrl
             }
         });
-        
+
     }
 
     _alert(index) {
@@ -76,8 +80,16 @@ export default class LessonPage extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={styles.container}>
+                <View style={{flexDirection: 'row' }}>
+					<Image source={{ uri: this.props.picUrl }} style={{ width: px2dp(90), height: px2dp(90), marginTop: 16, marginBottom:16,marginLeft:13,marginRight:13 }}></Image>
+					<View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch',marginTop:15,marginBottom:15}}>
+						<Text style={styles.pageTitle}>{this.props.title}</Text>
+						<Text style={styles.teacher}>解读人:{this.props.teacher}</Text>
+					</View>
+				</View>
                 <FlatList
+                    style={{backgroundColor: theme.pageBackgroundColor}}
                     ref={(flatList) => this._flatList = flatList}
                     ListHeaderComponent={this._header}
                     keyExtractor={(item, index) => item + index}
@@ -95,10 +107,18 @@ export default class LessonPage extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: theme.pageBackgroundColor
+        flexDirection: 'column',
+        justifyContent: 'flex-start',
+        backgroundColor: theme.backgroundColor
     },
-    slide: {
-
+    item: {
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'stretch',
+        marginLeft: 9, 
+        marginRight: 9, 
+        backgroundColor:'white'
     },
     image: {
         height: px2dp(130),
@@ -116,18 +136,47 @@ const styles = StyleSheet.create({
         width: Dimensions.get('window').width / 3,
     },
     txt: {
-        textAlign: 'center',
+        textAlign: 'left',
         textAlignVertical: 'center',
-        color: 'black',
-        fontSize: 30,
+        color: '#999999',
+        fontSize: px2dp(11),
+        padding: px2dp(9),
+        backgroundColor: 'white',
+        marginBottom:px2dp(9)
+    },
+    pageTitle: {
+        textAlign: 'left',
+		textAlignVertical: 'center',
+		color: '#333333',
+        fontSize: 13,
+        marginBottom: px2dp(10),
+		width: Dimensions.get('window').width - 100,
+		marginRight: 13
     },
     title: {
         textAlign: 'left',
         textAlignVertical: 'center',
-        color: 'black',
-        fontSize: 20,
+        color: '#333333',
+        fontSize: 13,
+        marginTop: 15,
+        marginLeft: 10,
+    },
+	teacher: {
+		textAlign: 'left',
+		textAlignVertical: 'center',
+		color: '#999999',
+        fontSize: 11,
+        alignItems:'center',
+		width: Dimensions.get('window').width - 100,
+		marginRight: 13
+	},
+    subTitle: {
+        textAlign: 'left',
+        textAlignVertical: 'center',
+        color: '#999999',
+        fontSize: 11,
         marginTop: 10,
-        marginBottom: 10,
+        marginBottom: 15,
         marginLeft: 10,
     },
     content: {
