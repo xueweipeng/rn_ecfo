@@ -193,6 +193,7 @@ export default class Lesson extends Component {
 				picUrl: item.item.pic,
 				title: item.item.lessonTitle,
 				teacher: item.item.lessonTeacher,
+				color: item.item.lessonColor,
 			}
 		});
 	}

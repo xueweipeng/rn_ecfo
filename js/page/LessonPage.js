@@ -81,7 +81,7 @@ export default class LessonPage extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{flexDirection: 'row' ,backgroundColor: theme.themeColor}}>
+                <View style={{flexDirection: 'row' ,backgroundColor: this.props.color}}>
 					<Image source={{ uri: this.props.picUrl }} style={{ width: px2dp(90), height: px2dp(90), marginTop: 16, marginBottom:16,marginLeft:13,marginRight:13 }}></Image>
 					<View style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'stretch',marginTop:15,marginBottom:15}}>
 						<Text style={styles.pageTitle}>{this.props.title}</Text>

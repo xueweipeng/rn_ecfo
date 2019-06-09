@@ -321,14 +321,14 @@ export default class IndividualPage extends Component {
                         </View>
                     </TouchableOpacity>
                     <View style={styles.list}>
-                        <Item text="昵称" subText={this.state.nick_name} textColor="#000000" onPress={this._onPressCallback.bind(this, 2)} />
-                        <Item text="个性签名" subText={this.state.signature} textColor="#000000" onPress={this._onPressCallback.bind(this, 3)} />
-                        <Item text="性别" subText={this.state.sex} textColor="#000000" onPress={this._onPressCallback.bind(this, 4)} />
-                        <Item text="出生年份" subText={this.state.birthday} textColor="#000000" onPress={this._onPressCallback.bind(this, 5)} />
+                        <Item text="昵称:" subText={this.state.nick_name} onPress={this._onPressCallback.bind(this, 2)} />
+                        <Item text="个性签名:" subText={this.state.signature} onPress={this._onPressCallback.bind(this, 3)} />
+                        <Item text="性别:" subText={this.state.sex} onPress={this._onPressCallback.bind(this, 4)} />
+                        <Item text="出生年份:" subText={this.state.birthday} onPress={this._onPressCallback.bind(this, 5)} />
                     </View>
                     <View style={styles.list}>
-                        <Item text="学历" subText={this.state.education} textColor="#000000" onPress={this._onPressCallback.bind(this, 6)} />
-                        <Item text="行业" subText={this.state.industry} textColor="#000000" onPress={this._onPressCallback.bind(this, 7)} />
+                        <Item text="学历:" subText={this.state.education} onPress={this._onPressCallback.bind(this, 6)} />
+                        <Item text="行业:" subText={this.state.industry} onPress={this._onPressCallback.bind(this, 7)} />
                     </View>
                 </ScrollView>
                 <Dialog
@@ -438,17 +438,18 @@ class Item extends Component {
     }
 
     static defaultProps = {
-        textColor: '#aaaaaa',
+        textColor: '#333333',
+        subTextColor: '#cccccc'
     }
 
     render() {
-        const { textColor, text, subText, onPress } = this.props;
+        const { textColor, text, subText, subTextColor, onPress } = this.props;
         return (
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.listItem}>
-                    <Text style={{ color: textColor, fontSize: px2dp(15) }}>{text}</Text>
+                    <Text style={{ color: textColor, fontSize: px2dp(13) }}>{text}</Text>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', marginRight: px2dp(15) }}>
-                        <Text style={{ color: this.props.textColor }}>{subText}</Text>
+                        <Text style={{ color: subTextColor }}>{subText}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -485,24 +486,24 @@ const styles = StyleSheet.create({
         borderTopWidth: 1 / PixelRatio.get(),
         borderBottomWidth: 1 / PixelRatio.get(),
         borderBottomColor: '#c4c4c4',
-        borderTopColor: '#e4e4e4',
+        borderTopColor: '#f7f7f7',
         marginTop: px2dp(10)
     },
     list: {
         flex: 1,
         borderTopWidth: 1 / PixelRatio.get(),
-        borderTopColor: '#e4e4e4',
-        marginTop: px2dp(15)
+        borderTopColor: '#f7f7f7',
+        marginTop: px2dp(10)
     },
     listItem: {
         flex: 1,
-        height: px2dp(47),
+        height: px2dp(52),
         backgroundColor: 'white',
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: px2dp(25),
-        paddingRight: px2dp(25),
-        borderBottomColor: '#c4c4c4',
+        paddingLeft: px2dp(18),
+        paddingRight: px2dp(18),
+        borderBottomColor: '#dedede',
         borderBottomWidth: 1 / PixelRatio.get()
     },
     dialogContentView: {

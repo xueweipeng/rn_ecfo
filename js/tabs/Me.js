@@ -170,7 +170,7 @@ export default class Me extends Component {
                         </TouchableOpacity>
                     }
                     <View style={styles.list}>
-                        <Item icon="md-heart" text="我的收藏" subText="" iconColor="#cd3232" onPress={this._onPressCallback.bind(this, 2)} />
+                        <Item icon="md-heart" text="我的收藏" subText="" iconColor="gray" onPress={this._onPressCallback.bind(this, 2)} />
                         <Item icon="md-eye" text="阅读过的文章" subText="" onPress={this._onPressCallback.bind(this, 3)} />
                         <Item icon="md-card" text="标签管理" subText="" onPress={this._onPressCallback.bind(this, 4)} />
                     </View>
@@ -202,10 +202,10 @@ class Item extends Component {
         return (
             <TouchableOpacity onPress={onPress}>
                 <View style={styles.listItem}>
-                    <Icon name={icon} size={px2dp(22)} color={iconColor} />
-                    <Text style={{ color: 'black', fontSize: px2dp(15), marginLeft: px2dp(20) }}>{text}</Text>
+                    <Icon name={icon} size={px2dp(13)} color={iconColor} />
+                    <Text style={{ color: '#333333', fontSize: px2dp(13), marginLeft: px2dp(8) }}>{text}</Text>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end' }}>
-                        <Text style={{ color: "#ccc" }}>{subText}</Text>
+                        <Text style={{ color: "#333333" }}>{subText}</Text>
                     </View>
                 </View>
             </TouchableOpacity>
@@ -233,24 +233,24 @@ const styles = StyleSheet.create({
         padding: px2dp(18),
         // borderTopWidth: 1 / PixelRatio.get(),
         borderBottomWidth: 1 / PixelRatio.get(),
-        borderBottomColor: '#c4c4c4',
+        borderBottomColor: '#dedede',
         borderTopColor: '#e4e4e4',
     },
     list: {
         flex: 1,
         borderTopWidth: 1 / PixelRatio.get(),
-        borderTopColor: '#e4e4e4',
-        marginTop: px2dp(15)
+        borderTopColor: '#f7f7f7',
+        marginTop: px2dp(10)
     },
     listItem: {
         flex: 1,
-        height: px2dp(47),
+        height: px2dp(52),
         backgroundColor: 'white',
         flexDirection: 'row',
         alignItems: 'center',
-        paddingLeft: px2dp(25),
-        paddingRight: px2dp(25),
-        borderBottomColor: '#c4c4c4',
+        paddingLeft: px2dp(18),
+        paddingRight: px2dp(18),
+        borderBottomColor: '#dedede',
         borderBottomWidth: 1 / PixelRatio.get()
     }
 });
