@@ -21,6 +21,7 @@ import theme from '../config/theme';
 import px2dp from '../util/px2dp';
 var { width, height } = Dimensions.get('window');
 import Video from 'react-native-video'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
 export default class PlayerPage extends Component {
     constructor(props) {
@@ -254,8 +255,11 @@ export default class PlayerPage extends Component {
             <View style={styles.container}>
                 {/*Android下必须有控件才能跳转*/}
                 {/* <NavigationBar title="个人主页" backOnPress={this._handleBack.bind(this)}/> */}
-                <Text style={{ color: theme.text.color, fontSize: px2dp(20), textAlign:'center', marginTop: 20 }}>{this.props.lessonTitle}</Text>
-                <Image source={{uri: this.props.lessonPic}} style={styles.image}></Image>
+                <View style={styles.lessonDetail} backgroundColor={this.props.lessonColor}>
+                    <Image source={{ uri: this.props.lessonPic }} style={styles.image} alignSelf={'center'}></Image>
+                    <Text style={{ color: '#ffffff', fontSize: px2dp(15), textAlign: 'center' }}>{this.props.lessonTitle}</Text>
+                    <Text style={{ color: '#ffffff', fontSize: px2dp(10), textAlign: 'center', marginTop: px2dp(10) }}>解读人:{this.props.lessonTeacher}</Text>
+                </View>
                 {/*播放器*/}
 
                 <Video
@@ -271,38 +275,38 @@ export default class PlayerPage extends Component {
                     onError={(e) => this.onError(e)}
                     onBuffer={() => this.onBuffer()}
                 />
-
+                <Slider
+                    style={styles.slider}
+                    ref='slider'
+                    value={this.state.sliderValue}
+                    maximumValue={this.state.duration}
+                    step={1}
+                    minimumTrackTintColor='#FFDB42'
+                    onValueChange={(value) => {
+                        this.setState({
+                            currentTime: value
+                        })
+                    }
+                    }
+                    onSlidingComplete={(value) => {
+                        this.refs.video.seek(value)
+                    }}
+                />
                 <View style={styles.playingInfo}>
                     {/*进度条*/}
-                    <Slider
-                        style={styles.slider}
-                        ref='slider'
-                        value={this.state.sliderValue}
-                        maximumValue={this.state.duration}
-                        step={1}
-                        minimumTrackTintColor='#FFDB42'
-                        onValueChange={(value) => {
-                            this.setState({
-                                currentTime: value
-                            })
-                        }
-                        }
-                        onSlidingComplete={(value) => {
-                            this.refs.video.seek(value)
-                        }}
-                    />
+
                     {/*歌曲按钮*/}
                     <View style={styles.playingControl}>
                         <TouchableOpacity onPress={() => this.prevAction(this.state.currentIndex - 1)}>
-                            <Image source={require('../image/previous.png')} style={{ width: 30, height: 30 }} />
+                            <Image source={require('../image/previous.png')} style={{ width: px2dp(19), height: px2dp(19) }} />
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => this.playAction()}>
-                            <Image source={this.state.isplayBtn} style={{ width: 30, height: 30 }} />
+                            <Image source={this.state.isplayBtn} style={{ width: px2dp(19), height: px2dp(19) }} />
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => this.nextAction(this.state.currentIndex + 1)}>
-                            <Image source={require('../image/next.png')} style={{ width: 30, height: 30 }} />
+                            <Image source={require('../image/next.png')} style={{ width: px2dp(19), height: px2dp(19) }} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -319,19 +323,22 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'stretch'
     },
+    lessonDetail: {
+        flexDirection: 'column',
+        height: px2dp(427)
+    },
     image: {
-        flex: 1,
         alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: 80,
-        marginBottom: 130,
-        marginLeft: 30,
-        marginRight: 30
+        justifyContent: 'center',
+        width: px2dp(181),
+        height: px2dp(181),
+        marginTop: px2dp(50),
+        marginBottom: px2dp(20),
     },
     slider: {
         marginLeft: 10,
         marginRight: 10,
-        marginBottom : 10
+        marginBottom: 10
     },
     playingControl: {
         flexDirection: 'row',

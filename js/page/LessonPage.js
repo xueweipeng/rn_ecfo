@@ -52,7 +52,9 @@ export default class LessonPage extends Component {
             passProps: {
                 lessonTitle: item.item.name,
                 lessonUrl: item.item.url,
-                lessonPic: this.props.picUrl
+                lessonPic: this.props.picUrl,
+                lessonTeacher: this.props.teacher,
+                lessonColor: this.props.color
             }
         });
 
