@@ -12,6 +12,7 @@ import {
     ScrollView,
     TextInput,
     ActivityIndicator,
+    PixelRatio,
     NetInfo,
     Animated,
     Easing,
@@ -20,8 +21,9 @@ import {
 import { connect } from 'react-redux'; // 引入connect函数
 import * as loginAction from '../../action/loginAction';// 导入action方法
 
-import { THEME_BACKGROUND, THEME_LABEL, THEME_TEXT, BUTTON_BACKGROUND } from "../../config/color"
+import { THEME_BACKGROUND, THEME_LABEL, THEME_TEXT, BUTTON_BACKGROUND, THEME_TEXT_COLOR } from "../../config/color"
 import alert from '../../util/utils'
+import px2dp from '../../util/px2dp';
 
 export default class LoginPage extends Component {
     mobile = '';
@@ -31,16 +33,16 @@ export default class LoginPage extends Component {
         super(props);
         this.state = { message: '' };
     }
-    
+
     requestForAuthCode(mobile) {
         fetch('http://localhost:8081/js/data/authCode.json?mobile=' + mobile)
-			.then((response) =>
-				response.json()
-			)
-			.then((responseJson) => {
+            .then((response) =>
+                response.json()
+            )
+            .then((responseJson) => {
                 console.log('验证码请求成功')
-				let message = responseJson.message
-				if (message === 'success') {
+                let message = responseJson.message
+                if (message === 'success') {
                     this.props.navigator.push({
                         screen: 'AuthCode',
                         title: '',
@@ -52,10 +54,10 @@ export default class LoginPage extends Component {
                 } else {
                     alert('请求验证码失败，失败信息：' + message)
                 }
-			})
-			.catch((error) => {
-				console.error(error);
-			});
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     doAuthCode() {
@@ -85,10 +87,18 @@ export default class LoginPage extends Component {
             <View style={styles.loginPage}>
                 <View style={styles.loginSection}>
                     <Text style={styles.loginTitle}>登录/注册</Text>
-                    <TextInput style={styles.loginInput} placeholder='请输入手机号码' keyboardType={'numeric'}
+                    <TextInput style={styles.loginInput}
+                        underlineColorAndroid='transparent'
+                        autoFocus={true}
+                        placeholderTextColor='#cccccc'
+                        selectionColor='#ff4f39' placeholder='请输入手机号码' keyboardType={'numeric'}
                         defaultValue={this.mobile} autoCapitalize={'none'} maxLength={11}
                         onChangeText={(text) => this.mobile = text} />
-                    <Button style={styles.loginButton} title={'发送验证码'} color="#f27130" onPress={() => this.doAuthCode()} />
+                    <TouchableOpacity onPress={() => this.doAuthCode()}>
+                        <View style={styles.buttonBackground} >
+                            <Text style={styles.loginButton}>发送验证码</Text>
+                        </View>
+                    </TouchableOpacity>
                     <Text style={styles.subButtonText} onPress={() => this.doPassword()}>使用密码登录</Text>
                 </View>
             </View>
@@ -101,26 +111,32 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        padding: 20,
-        backgroundColor: THEME_BACKGROUND
+        backgroundColor: '#ffffff'
     },
     loginSection: {
         flexDirection: 'column',
         justifyContent: 'center',
-        padding: 20
     },
     loginTitle: {
-        fontSize: 28,
-        fontWeight: '500',
-        color: THEME_LABEL,
+        fontSize: px2dp(24),
+        color: '#333333',
         textAlign: 'left',
-        marginTop: 32,
-        marginBottom: 32
+        marginTop: px2dp(54),
+        marginLeft: px2dp(18),
+    },
+    buttonBackground: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        borderRadius: 5,
+        backgroundColor: THEME_TEXT_COLOR,
+        marginLeft: px2dp(24),
+        marginRight: px2dp(24),
+        marginTop: px2dp(30),
+        height: px2dp(37),
     },
     loginButton: {
-        margin: 40,
-        color: BUTTON_BACKGROUND,
         textAlign: 'center',
+        color: '#ffffff'
     },
     subButton: {
         flexDirection: 'row',
@@ -128,16 +144,22 @@ const styles = StyleSheet.create({
         marginTop: 28
     },
     subButtonText: {
-        color: BUTTON_BACKGROUND,
-        fontSize: 14,
+        color: THEME_TEXT_COLOR,
+        fontSize: px2dp(11),
         textAlign: 'right',
-        marginTop: 18
+        marginTop: px2dp(20),
+        marginRight: 24
     },
     loginInput: {
-        marginBottom: 8,
         height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
+        borderColor: 'transparent',
+        borderWidth: 1,
+        fontSize: px2dp(13),
+        marginLeft: px2dp(18),
+        marginTop: px2dp(44),
+        marginRight: px2dp(18),
+        borderBottomWidth: 1 / PixelRatio.get(),
+        borderBottomColor: '#dedede',
     },
     message: {
         marginTop: 16,

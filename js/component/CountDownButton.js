@@ -9,6 +9,7 @@ import {
     StyleSheet,
     ViewPropTypes
 } from 'react-native';
+import px2dp from '../util/px2dp';
 
 export default class CountDownButton extends Component {
     constructor(props) {
@@ -29,7 +30,9 @@ export default class CountDownButton extends Component {
         disableColor: PropTypes.string,
         timerTitle: PropTypes.string,
         enable: PropTypes.bool,
-        timerEnd: PropTypes.func
+        timerEnd: PropTypes.func,
+        fontSize: PropTypes.int,
+        textColor: PropTypes.string
     };
 
     _countDownAction() {
@@ -77,7 +80,7 @@ export default class CountDownButton extends Component {
     }
 
     render() {
-        const { onClick, style, textStyle, enable, disableColor } = this.props
+        const { onClick, style, textStyle, enable, textColor, disableColor, fontSize } = this.props
         const { counting, timerTitle, selfEnable } = this.state
         return (
             <TouchableOpacity onPress={() => {
@@ -87,7 +90,7 @@ export default class CountDownButton extends Component {
                 };
             }}>
                 <View style={styles.container}>
-                    <Text style={[{ fontSize: 16 }, { color: ((!counting && enable && selfEnable) ? (textStyle ? textStyle.color : 'blue') : disableColor || 'gray') }]}>{timerTitle}</Text>
+                    <Text style={[{ color: textColor, fontSize: fontSize }, { color: ((!counting && enable && selfEnable) ? (textStyle ? textStyle.color : textColor) : disableColor || '#aaaaaa') }]}>{timerTitle}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -97,7 +100,7 @@ export default class CountDownButton extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center', 
+        justifyContent: 'center',
         alignItems: 'center'
     },
 })

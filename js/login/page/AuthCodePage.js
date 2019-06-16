@@ -14,10 +14,11 @@ import {
     ActivityIndicator,
     Animated,
     Easing,
-    InteractionManager
+    InteractionManager,
+    PixelRatio
 } from 'react-native'
 
-import { THEME_BACKGROUND, THEME_LABEL, THEME_TEXT, BUTTON_BACKGROUND, CLICKABLE_TEXT } from "../../config/color"
+import { THEME_BACKGROUND, THEME_LABEL, THEME_TEXT, BUTTON_BACKGROUND, CLICKABLE_TEXT, THEME_BACKGROUND_WHITE,THEME_TEXT_COLOR } from "../../config/color"
 import AuthCodeInput from '../../component/AuthCodeInput';
 import alert from '../../util/utils';
 import storage from '../../util/storage';
@@ -25,11 +26,13 @@ import CountDownButton from '../../component/CountDownButton';
 import { connect } from 'react-redux'; // 引入connect函数
 import * as loginAction from '../../action/loginAction';// 导入action方法
 import store from '../../screens'
+import px2dp from '../../util/px2dp';
 
 class AuthCodePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            authCode: '',
             message: '',
             startCounting: true
         };
@@ -103,8 +106,8 @@ class AuthCodePage extends Component {
         });
     }
 
-     // 状态更新，判断是否登录并作出处理
-     shouldComponentUpdate(nextProps, nextState) {
+    // 状态更新，判断是否登录并作出处理
+    shouldComponentUpdate(nextProps, nextState) {
         // 登录完成,切成功登录
         if (nextProps.status === '登录成功' && nextProps.isSuccess) {
             this.props.navigator.popToRoot({
@@ -139,17 +142,17 @@ class AuthCodePage extends Component {
     }
 
     doConfirm() {
-        if (this.authCode.length < 4 || this.authCode.length > 4) {
+        if (this.state.authCode.length < 4 || this.state.authCode.length > 4) {
             alert('验证码长度不正确')
             return
         }
-        console.log('输入的验证码是:' + this.authCode)
+        console.log('输入的验证码是:' + this.state.authCode)
         let number = this.props.number
         let from = this.props.from
         if (from === 'find') {
-            this._checkAuthCode(number, this.authCode)
+            this._checkAuthCode(number, this.state.authCode)
         } else {
-            this._fetchLoginData(number, this.authCode)
+            this._fetchLoginData(number, this.state.authCode)
         }
     }
 
@@ -162,7 +165,8 @@ class AuthCodePage extends Component {
                     <Text style={styles.descStyle}>{this.props.number + '，'}</Text>
                     <CountDownButton
                         enable={true}
-                        textStyle={{ color: "#f27130" }}
+                        fontSize={px2dp(13)}
+                        textColor={THEME_TEXT_COLOR}
                         timerActiveTitle={['(', 's)']}
                         onClick={(shouldStartCounting) => {
                             console.log('countdown clicked')
@@ -171,10 +175,18 @@ class AuthCodePage extends Component {
                         }} />
                 </View>
                 <TextInput style={styles.authInput} placeholder='请输入验证码' keyboardType={'numeric'}
-                    autoCapitalize={'none'} maxLength={4}
-                    onChangeText={(text) => this.authCode = text} />
-                <Button style={styles.button} title={'确定'} color="#f27130" onPress={() => this.doConfirm()} />
-                {/* <AuthCodeInput style={styles.authCodeStyle} maxLength={4}/> */}
+                    autoCapitalize={'none'}
+                    maxLength={4}
+                    underlineColorAndroid='transparent'
+                    autoFocus={true}
+                    placeholderTextColor='#cccccc'
+                    selectionColor='#ff4f39'
+                    onChangeText={(text) => this.state.authCode = text} />
+                <TouchableOpacity onPress={() => this.doConfirm()}>
+                    <View style={styles.buttonBackground}>
+                        <Text style={styles.button}>确定</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -183,9 +195,9 @@ class AuthCodePage extends Component {
 const styles = StyleSheet.create({
     textStyle: {
         textAlign: 'center',
-        fontSize: 24,
-        color: 'black',
-        margin: 30
+        fontSize: px2dp(16),
+        color: '#333333',
+        marginTop: px2dp(80)
     },
     authCodeStyle: {
         margin: 30
@@ -194,33 +206,42 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
-        padding: 20,
-        backgroundColor: THEME_BACKGROUND
+        backgroundColor: THEME_BACKGROUND_WHITE
     },
     descStyle: {
-        fontSize: 16,
-        color: 'gray'
+        fontSize: px2dp(13),
+        color: '#aaaaaa'
     },
     descFatherStyle: {
         flexDirection: 'row',
         justifyContent: 'flex-start',
-        marginTop: 30
-    },
-    clickableStyle: {
-        fontSize: 16,
-        color: CLICKABLE_TEXT
+        marginTop: px2dp(14),
+        marginLeft:px2dp(18)
     },
     authInput: {
-        marginTop: 20,
-        marginBottom: 8,
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
+        height: px2dp(52),
+        borderColor: 'transparent',
+        borderWidth: 1,
+        fontSize: px2dp(13),
+        marginLeft: px2dp(18),
+        marginRight: px2dp(18),
+        marginTop: px2dp(44),
+        borderBottomWidth: 1 / PixelRatio.get(),
+        borderBottomColor: '#dedede',
+    },
+    buttonBackground: {
+        flexDirection: 'column',
+        justifyContent: 'center',
+        borderRadius: 5,
+        backgroundColor: THEME_TEXT_COLOR,
+        marginLeft: px2dp(24),
+        marginRight: px2dp(24),
+        marginTop: px2dp(30),
+        height: px2dp(37),
     },
     button: {
-        margin: 30,
-        color: BUTTON_BACKGROUND,
         textAlign: 'center',
+        color: '#ffffff'
     },
     message: {
         marginTop: 16,

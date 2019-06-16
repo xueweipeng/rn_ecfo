@@ -98,9 +98,11 @@ class SettingPage extends Component {
             <View style={styles.container}>
                 <ScrollView>
                     <View style={styles.list}>
-                        <Item icon="md-contacts" text="关于我们" textColor="black" onPress={this._onPressCallback.bind(this, 6)} />
-                        <Item icon="md-pulse" text="检查升级" textColor="black" onPress={this._onPressCallback.bind(this, 5)} />
-                        <Item icon="md-exit" text="退出登录" textColor="orange" onPress={this._onPressCallback.bind(this, 4)} />
+                        <Item icon="md-contacts" text="关于我们" textColor="#333333" onPress={this._onPressCallback.bind(this, 6)} />
+                        <Item icon="md-pulse" text="检查升级" textColor="#333333" onPress={this._onPressCallback.bind(this, 5)} />
+                    </View>
+                    <View style={styles.list}>
+                        <Item icon="md-exit" text="退出登录" textColor="#faad27" onPress={this._onPressCallback.bind(this, 4)} />
                     </View>
                 </ScrollView>
             </View>
@@ -160,14 +162,14 @@ const styles = StyleSheet.create({
         borderTopWidth: 1 / PixelRatio.get(),
         borderBottomWidth: 1 / PixelRatio.get(),
         borderBottomColor: '#c4c4c4',
-        borderTopColor: '#e4e4e4',
+        borderTopColor: '#dedede',
         marginTop: px2dp(10)
     },
     list: {
         flex: 1,
         borderTopWidth: 1 / PixelRatio.get(),
-        borderTopColor: '#e4e4e4',
-        marginTop: px2dp(15)
+        borderTopColor: '#dedede',
+        marginTop: px2dp(10)
     },
     listItem: {
         flex: 1,
@@ -177,8 +179,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingLeft: px2dp(25),
         paddingRight: px2dp(25),
-        borderBottomColor: '#c4c4c4',
-        borderBottomWidth: 1 / PixelRatio.get()
+        borderBottomColor: '#dedede',
+        borderBottomWidth: px2dp(1)
     }
 })
 
