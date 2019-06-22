@@ -10,7 +10,8 @@ export default class LessonPage extends Component {
         this.state = {
             refreshing: true,
             loadedData: false,
-            lessonList: []
+            lessonList: [],
+            currentIndex: 0
         }
     }
 

@@ -22,6 +22,7 @@ import px2dp from '../util/px2dp';
 var { width, height } = Dimensions.get('window');
 import Video from 'react-native-video'
 import Icon from 'react-native-vector-icons/FontAwesome'
+import { THEME_TEXT_COLOR, THEME_LABEL, THEME_TEXT, BUTTON_BACKGROUND, CLICKABLE_TEXT, THEME_BACKGROUND_WHITE } from "../config/color"
 
 export default class PlayerPage extends Component {
     constructor(props) {
@@ -275,13 +276,14 @@ export default class PlayerPage extends Component {
                     onError={(e) => this.onError(e)}
                     onBuffer={() => this.onBuffer()}
                 />
+                {/*进度条*/}
                 <Slider
                     style={styles.slider}
                     ref='slider'
                     value={this.state.sliderValue}
                     maximumValue={this.state.duration}
                     step={1}
-                    minimumTrackTintColor='#FFDB42'
+                    minimumTrackTintColor={THEME_TEXT_COLOR}
                     onValueChange={(value) => {
                         this.setState({
                             currentTime: value
@@ -293,8 +295,6 @@ export default class PlayerPage extends Component {
                     }}
                 />
                 <View style={styles.playingInfo}>
-                    {/*进度条*/}
-
                     {/*歌曲按钮*/}
                     <View style={styles.playingControl}>
                         <TouchableOpacity onPress={() => this.prevAction(this.state.currentIndex - 1)}>
@@ -302,7 +302,7 @@ export default class PlayerPage extends Component {
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => this.playAction()}>
-                            <Image source={this.state.isplayBtn} style={{ width: px2dp(19), height: px2dp(19) }} />
+                            <Image source={this.state.isplayBtn} style={{ width: px2dp(38), height: px2dp(38) }} />
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => this.nextAction(this.state.currentIndex + 1)}>
@@ -342,7 +342,7 @@ const styles = StyleSheet.create({
     },
     playingControl: {
         flexDirection: 'row',
-        alignItems: 'stretch',
+        alignItems: 'center',
         justifyContent: 'space-around',
         marginLeft: 10,
         marginRight: 10,
