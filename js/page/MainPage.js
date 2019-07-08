@@ -12,10 +12,12 @@ import {
 } from 'react-native'
 
 import TabNavigator from 'react-native-tab-navigator';
-import Icon from 'react-native-vector-icons/FontAwesome'
+import Icon from 'react-native-vector-icons/FontAwesome';
 import Lesson from '../tabs/Lesson';
 import Me from '../tabs/Me';
-import px2dp from '../util/px2dp'
+import px2dp from '../util/px2dp';
+
+
 
 
 export default class MainPage extends Component {
@@ -41,7 +43,7 @@ export default class MainPage extends Component {
     }
 
     componentDidMount() {
-        
+
     }
 
     render() {
@@ -52,27 +54,27 @@ export default class MainPage extends Component {
             });
         }
         return (
-            <TabNavigator style={styles.container}>
-                <TabNavigator.Item
-                    selected={this.state.selectedTab === 'lesson'}
-                    title="课程"
-                    selectedTitleStyle={{ color: "#faad27" }}
-                    renderIcon={() => <Icon name="book" size={px2dp(22)} color="#666" />}
-                    renderSelectedIcon={() => <Icon name="book" size={px2dp(22)} color="#faad27" />}
-                    onPress={() => this.setState({ selectedTab: 'lesson' })}>
-                    {<Lesson navigator={this.props.navigator} />}
-                </TabNavigator.Item>
-                <TabNavigator.Item
-                    selected={this.state.selectedTab === 'me'}
-                    title="我的"
-                    selectedTitleStyle={{ color: "#faad27" }}
-                    renderIcon={() => <Icon name="user" size={px2dp(22)} color="#666" />}
-                    renderSelectedIcon={() => <Icon name="user" size={px2dp(22)} color="#faad27" />}
-                    onPress={() => this.setState({ selectedTab: 'me' })}>
-                    {/* <将导航组件对象设置给使用该对象的组件/> */}
-                    {<Me navigator={this.props.navigator} />} 
-                </TabNavigator.Item>
-            </TabNavigator>
+                <TabNavigator style={styles.container}>
+                    <TabNavigator.Item
+                        selected={this.state.selectedTab === 'lesson'}
+                        title="课程"
+                        selectedTitleStyle={{ color: "#faad27" }}
+                        renderIcon={() => <Icon name="book" size={px2dp(22)} color="#666" />}
+                        renderSelectedIcon={() => <Icon name="book" size={px2dp(22)} color="#faad27" />}
+                        onPress={() => this.setState({ selectedTab: 'lesson' })}>
+                        {<Lesson navigator={this.props.navigator} />}
+                    </TabNavigator.Item>
+                    <TabNavigator.Item
+                        selected={this.state.selectedTab === 'me'}
+                        title="我的"
+                        selectedTitleStyle={{ color: "#faad27" }}
+                        renderIcon={() => <Icon name="user" size={px2dp(22)} color="#666" />}
+                        renderSelectedIcon={() => <Icon name="user" size={px2dp(22)} color="#faad27" />}
+                        onPress={() => this.setState({ selectedTab: 'me' })}>
+                        {/* <将导航组件对象设置给使用该对象的组件/> */}
+                        {<Me navigator={this.props.navigator} />}
+                    </TabNavigator.Item>
+                </TabNavigator>
         );
     }
 }
@@ -95,3 +97,4 @@ const styles = StyleSheet.create({
         marginBottom: 5,
     },
 });
+

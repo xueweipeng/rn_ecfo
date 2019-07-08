@@ -18,7 +18,13 @@ Navigation.startSingleScreenApp({
     {
         label: '首页',
         screen: 'MainPage',
-    }
+    },
+    drawer: { // optional, add this if you want a side menu drawer in your app
+        left: { // optional, define if you want a drawer from the left
+          screen: 'Player' // unique ID registered with Navigation.registerScreen
+        },
+        disableOpenGesture: false // optional, can the drawer be opened with a swipe instead of button
+      },
 });
 
 

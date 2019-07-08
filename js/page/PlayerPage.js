@@ -23,8 +23,12 @@ var { width, height } = Dimensions.get('window');
 import Video from 'react-native-video'
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { THEME_TEXT_COLOR, THEME_LABEL, THEME_TEXT, BUTTON_BACKGROUND, CLICKABLE_TEXT, THEME_BACKGROUND_WHITE } from "../config/color"
+import * as playAction from '../action/playerAction';// 导入action方法
+import store from '../screens'
+import { connect } from 'react-redux'; // 引入connect函数
 
-export default class PlayerPage extends Component {
+
+class PlayerPage extends Component {
     constructor(props) {
         super(props);
         this.spinValue = new Animated.Value(0);
@@ -51,6 +55,24 @@ export default class PlayerPage extends Component {
             duration: 6000,
             easing: Easing.inOut(Easing.linear),
         });
+    }
+
+    // componentWillReceiveProps(nextProps) {
+    //     store.subscribe(() => {
+    //         //监听state变化
+    //         console.log('player state change ' + store.getState().playerReducer.status)
+    //         playerState = store.getState().playerReducer.status
+    //         let val = parseInt(playerState.playTime)
+    //         this.setState({
+    //             sliderValue: val,
+    //             currentTime: playerState.playProgress
+    //         })
+    //     });
+    // }
+
+    componentDidMount() {
+        let { play, url, position } = this.props;
+        play(url, position);
     }
 
     imgMoving = () => {
@@ -115,22 +137,32 @@ export default class PlayerPage extends Component {
         // this.loadSongInfo(index)   //加载数据
     }
 
+    //上一首/下一首
+    playPreAndNextAction = index => {
+        let { lessonList, play, pause, setCurrentItem } = this.props;
+        pause()
+        play(lessonList[index].url, 0)
+        setCurrentItem(lessonList[index]);
+    }
+
     //播放/暂停
     playAction = () => {
-        this.setState({
-            pause: !this.state.pause
-        })
+        const { play, pause, url } = this.props
         //判断按钮显示什么
         if (this.state.pause == false) {
             this.setState({
                 isplayBtn: require('../image/play.png')
             })
+            pause()
         } else {
             this.setState({
                 isplayBtn: require('../image/pause.png')
             })
+            play(url, 0)
         }
-
+        this.setState({
+            pause: !this.state.pause
+        })
     }
 
     //换歌时恢复进度条 和起始时间
@@ -245,29 +277,36 @@ export default class PlayerPage extends Component {
             })
     }
 
-    componentDidMount() {
-        this.loadSongList()
-        // this.stop()
-        // this.play()
-    }
+    // componentWillReceiveProps(nextProps) {
+    //     // this.loadSongList()
+    //     // this.stop()
+    //     // this.play()
+    //     const { play } = this.props
+    //     let url = this.props.lessonUrl
+    //     play(url, 0)
+    // }
 
     render() {
+        let { playTime, url, lessonList, currentItem } = this.props;
+        let currentIndex = lessonList.findIndex(list => list.url === url);
+        let preIndex = currentIndex === 0 ? lessonList.length - 1 : currentIndex - 1;
+        let nextIndex = currentIndex === lessonList.length - 1 ? 0 : currentIndex + 1;
         return (
             <View style={styles.container}>
                 {/*Android下必须有控件才能跳转*/}
                 {/* <NavigationBar title="个人主页" backOnPress={this._handleBack.bind(this)}/> */}
                 <View style={styles.lessonDetail} backgroundColor={this.props.lessonColor}>
                     <Image source={{ uri: this.props.lessonPic }} style={styles.image} alignSelf={'center'}></Image>
-                    <Text style={{ color: '#ffffff', fontSize: px2dp(15), textAlign: 'center' }}>{this.props.lessonTitle}</Text>
+                    <Text style={{ color: '#ffffff', fontSize: px2dp(15), textAlign: 'center' }}>{currentItem.name}</Text>
                     <Text style={{ color: '#ffffff', fontSize: px2dp(10), textAlign: 'center', marginTop: px2dp(10) }}>解读人:{this.props.lessonTeacher}</Text>
                 </View>
                 {/*播放器*/}
 
-                <Video
+                {/* <Video
                     source={{ uri: this.props.lessonUrl }}
                     ref='video'
                     volume={1.0}
-                    paused={this.state.pause}
+                    paused={0}
                     onProgress={(e) => this.onProgress(e)}
                     onLoad={(e) => this.onLoad(e)}
                     playInBackground={true}
@@ -275,40 +314,41 @@ export default class PlayerPage extends Component {
                     audioOnly={true}
                     onError={(e) => this.onError(e)}
                     onBuffer={() => this.onBuffer()}
-                />
+                /> */}
                 {/*进度条*/}
                 <Slider
                     style={styles.slider}
                     ref='slider'
-                    value={this.state.sliderValue}
+                    value={parseInt(playTime)}
                     maximumValue={this.state.duration}
                     step={1}
                     minimumTrackTintColor={THEME_TEXT_COLOR}
                     onValueChange={(value) => {
-                        this.setState({
-                            currentTime: value
-                        })
+                        // this.setState({
+                        //     currentTime: value
+                        // })
+                        const { play } = this.props
+                        play('', value)
                     }
                     }
-                    onSlidingComplete={(value) => {
-                        this.refs.video.seek(value)
-                    }}
+                // onSlidingComplete={(value) => {
+                //     this.refs.video.seek(value)
+                // }}
                 />
                 <View style={styles.playingInfo}>
                     {/*歌曲按钮*/}
                     <View style={styles.playingControl}>
-                        <TouchableOpacity onPress={() => this.prevAction(this.state.currentIndex - 1)}>
+                        <TouchableOpacity onPress={() => this.playPreAndNextAction(preIndex)}>
                             <Image source={require('../image/previous.png')} style={{ width: px2dp(19), height: px2dp(19) }} />
                         </TouchableOpacity>
-
-                        <TouchableOpacity onPress={() => this.playAction()}>
+                        <TouchableOpacity onPress={this.playAction}>
                             <Image source={this.state.isplayBtn} style={{ width: px2dp(38), height: px2dp(38) }} />
                         </TouchableOpacity>
-
-                        <TouchableOpacity onPress={() => this.nextAction(this.state.currentIndex + 1)}>
+                        <TouchableOpacity onPress={() => this.playPreAndNextAction(nextIndex)}>
                             <Image source={require('../image/next.png')} style={{ width: px2dp(19), height: px2dp(19) }} />
                         </TouchableOpacity>
                     </View>
+
                 </View>
             </View>
         );
@@ -372,3 +412,20 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(255,255,255,0.0)',
     }
 })
+
+export default connect(
+    (store) => ({
+        playState: store.playerReducer.playState,
+        url: store.playerReducer.url,
+        playProgress: store.playerReducer.playProgress,
+        position: store.playerReducer.position,
+        playTime: store.playerReducer.playTime,
+        currentItem: store.playerReducer.currentItem,
+    })
+    ,
+    (dispatch) => ({
+        play: (url, position) => dispatch(playAction.play(url, position)),
+        pause: () => dispatch(playAction.pause()),
+        setCurrentItem: (currentItem) => dispatch(playAction.setCurrentItem(currentItem)),
+    })
+)(PlayerPage)

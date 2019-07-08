@@ -14,6 +14,7 @@ import SettingPage from './page/SettingPage';
 import { Provider } from 'react-redux';
 import configureStore from './reducers/configureStore';
 import CompanyPage from './page/CompanyPage';
+import Player from './component/Player';
 
 const store = configureStore();
 
@@ -21,7 +22,7 @@ export function registerScreens() {
     Navigation.registerComponent('MainPage', () => MainPage, store, Provider);
     Navigation.registerComponent('Personal', () => IndividualPage, store, Provider);
     Navigation.registerComponent('LessonPage', () => LessonPage, store, Provider);
-    Navigation.registerComponent('Player', () => PlayerPage, store, Provider);
+    Navigation.registerComponent('PlayerPage', () => PlayerPage, store, Provider);
     Navigation.registerComponent('WebView', () => MyWebView, store, Provider);
     Navigation.registerComponent('Login', () => LoginPage, store, Provider);
     Navigation.registerComponent('Password', () => PasswordPage, store, Provider);
@@ -30,6 +31,7 @@ export function registerScreens() {
     Navigation.registerComponent('SetPassword', () => SetPasswordPage, store, Provider);
     Navigation.registerComponent('Setting', () => SettingPage, store, Provider); 
     Navigation.registerComponent('About', () => CompanyPage, store, Provider);
+    Navigation.registerComponent('Player', () => Player, store, Provider);
   }
 
   export default store
