@@ -35,7 +35,7 @@ export default class LoginPage extends Component {
     }
 
     requestForAuthCode(mobile) {
-        fetch('http://localhost:8081/js/data/authCode.json?mobile=' + mobile)
+        fetch('http://127.0.0.1:5000/login/authcode?phone=' + mobile)
             .then((response) =>
                 response.json()
             )
@@ -56,7 +56,7 @@ export default class LoginPage extends Component {
                 }
             })
             .catch((error) => {
-                console.error(error);
+                alert('请检查您的网络')
             });
     }
 

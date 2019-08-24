@@ -11,9 +11,9 @@ export function login(isPassword, mobile, passwordOrAuthcode) {
         dispatch(isLogining());
         let url = ''
         if (isPassword === true) {
-            url = 'http://localhost:8081/js/data/login.json?mobile=' + mobile + '&pwd=' + passwordOrAuthcode
+            url = 'http://localhost:5000/login/user?user_name=' + mobile + '&pwd=' + passwordOrAuthcode
         } else {
-            url = 'http://localhost:8081/js/data/login.json?mobile=' + mobile + '&auth=' + passwordOrAuthcode
+            url = 'http://localhost:5000/login/phone?phone=' + mobile + '&authcode=' + passwordOrAuthcode
         }
         fetch(url)
             .then((response) =>
@@ -33,7 +33,6 @@ export function login(isPassword, mobile, passwordOrAuthcode) {
                 }
             })
             .catch((error) => {
-                console.error(error);
                 alert('登录失败，失败信息：' + error)
             });
     }

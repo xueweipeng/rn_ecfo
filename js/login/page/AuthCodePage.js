@@ -55,7 +55,7 @@ class AuthCodePage extends Component {
                 }
             })
             .catch((error) => {
-                console.error(error);
+                alert('请检查网络设置')
             });
     }
 
@@ -137,7 +137,6 @@ class AuthCodePage extends Component {
             .catch((error) => {
                 shouldStartCounting(false)
                 alert('请求验证码失败，失败信息：' + error)
-                console.error(error);
             });
     }
 

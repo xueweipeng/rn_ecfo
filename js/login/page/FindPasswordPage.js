@@ -61,7 +61,7 @@ export default class FindPasswordPage extends Component {
                 }
             })
             .catch((error) => {
-                console.error(error);
+                alert('请检查网络设置')
             });
 
     }

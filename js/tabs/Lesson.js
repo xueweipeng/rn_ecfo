@@ -4,7 +4,7 @@ import px2dp from '../util/px2dp';
 import theme from '../config/theme';
 import computeTime from '../util/computeTime';
 import Swiper from 'react-native-swiper';
-
+import alert from '../util/utils';
 
 const bannerImages = [
 	require('../image/banner1.jpg'),
@@ -22,7 +22,7 @@ export default class Lesson extends Component {
 	}
 
 	_fetchData() {
-		fetch('http://localhost:8081/js/data/data.json')
+		fetch('http://127.0.0.1:5000/lesson/all')
 			.then((response) =>
 				response.json()
 			)
@@ -44,7 +44,12 @@ export default class Lesson extends Component {
 				})
 			})
 			.catch((error) => {
-				console.error(error);
+				this.setState({
+					dataBlob: [],
+					loadedData: true,
+					refreshing: false
+				})
+				alert('请检查您的网络')
 			});
 	}
 

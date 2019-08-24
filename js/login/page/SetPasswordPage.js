@@ -50,7 +50,7 @@ export default class SetPasswordPage extends Component {
                 }
             })
             .catch((error) => {
-                console.error(error);
+                alert('请检查网络设置')
             });
     }
 
