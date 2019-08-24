@@ -90,7 +90,17 @@ class SettingPage extends Component {
     }
 
     _checkUpgrade() {
-
+        fetch('http://localhost:5000/upgrade/check')
+			.then((response) =>
+				response.json()
+			)
+			.then((responseJson) => {
+				let data = responseJson.data
+				alert(data.url + ' ' + data.version)
+			})
+			.catch((error) => {
+				alert('请检查您的网络')
+			});
     }
 
     render() {

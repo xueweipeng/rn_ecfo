@@ -22,7 +22,7 @@ export default class Lesson extends Component {
 	}
 
 	_fetchData() {
-		fetch('http://127.0.0.1:5000/lesson/all')
+		fetch('http://localhost:5000/lesson/all')
 			.then((response) =>
 				response.json()
 			)
