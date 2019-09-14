@@ -7,6 +7,8 @@ import Avatar from '../component/Avatar'
 import RBSheet from 'react-native-raw-bottom-sheet'
 import ActionSheet from 'rn-actionsheet-module'
 import ImagePicker from 'react-native-image-picker';
+import alert from '../util/utils'
+import storage from '../util/storage'
 
 import Dialog, {
     DialogTitle,
@@ -60,12 +62,12 @@ export default class IndividualPage extends Component {
         super(props);
         this.state = {
             avatar: 'http://www.ecfo.com.cn/img2/elevenV.png',
-            nick_name: 'ecfo',
-            signature: 'hello',
-            sex: 'male',
-            birthday: '1990',
-            education: '博士',
-            industry: '互联网',
+            nick_name: '',
+            signature: '',
+            sex: '',
+            birthday: '',
+            education: '',
+            industry: '',
             fromLocal: false,
             customBackgroundDialog: false,
             defaultAnimationDialog: false,
@@ -80,6 +82,56 @@ export default class IndividualPage extends Component {
             active: false,
             modalVisible: false
         }
+    }
+
+    componentDidMount() {
+        let token = ''
+        storage.load({
+            key: 'user',
+            autoSync: false,
+        }).then(ret => {
+            if (ret && ret.token) {
+                token = ret.token
+                this._requestForProfile(token)
+                this.setState({
+                    token: ret.token
+                })
+            } else {
+                this.setState({
+                    token: ''
+                })
+            }
+        }).catch(err => {
+            // console.warn(err.message);
+        });
+
+    }
+
+    _requestForProfile(token) {
+        fetch('http://127.0.0.1:5000/profile/get_profile?token=' + token)
+            .then((response) =>
+                response.json()
+            )
+            .then((responseJson) => {
+                console.log('请求资料成功')
+                let message = responseJson.message
+                if (message === 'success') {
+                    let data = responseJson.data
+                    this.setState({
+                        nick_name: data.nick_name,
+                        signature: data.signature,
+                        sex: data.sex,
+                        birthday: data.birthday,
+                        education: data.education,
+                        industry: data.industry,
+                    })
+                } else {
+                    alert('请求个人资料失败，失败信息：' + message)
+                }
+            })
+            .catch((error) => {
+                alert('请检查您的网络')
+            });
     }
 
     _handleBack() {
@@ -188,33 +240,98 @@ export default class IndividualPage extends Component {
     // }
 
     _onSelectEducation(which) {
+        let edu = ''
         switch (which) {
             case 0:
+                edu = '高中'
                 this.setState({
                     education: '高中'
                 })
                 break
             case 1:
+                edu = '专科'
                 this.setState({
                     education: '专科'
                 })
                 break
             case 2:
+                edu = '本科'
                 this.setState({
                     education: '本科'
                 })
                 break
             case 3:
+                edu = '硕士'
                 this.setState({
                     education: '硕士'
                 })
                 break
             case 4:
+                edu = '博士'
                 this.setState({
                     education: '博士'
                 })
                 break
         }
+        this._postProfile('edu', edu)
+    }
+
+    _postProfile(key, value) {
+        var opts = {
+            method: "POST",   //请求方法
+            body: JSON.stringify({
+                key: key,
+                value: value,
+                token: this.state.token
+            }),   //请求体
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+
+        }
+
+        fetch('http://localhost:5000/profile/upload_profile', opts)
+            .then((response) => {
+                response.json()
+            })
+            .then((responseText) => {
+                alert(responseText)
+            })
+            .catch((error) => {
+                alert(error)
+            })
+    }
+
+    _postEducation(edu) {
+        // let formData = new FormData();
+        // formData.append("username", "hello");
+        // formData.append("password", "1111aaaa");
+
+        var opts = {
+            method: "POST",   //请求方法
+            body: JSON.stringify({
+                key: 'education',
+                value: edu,
+                token: this.state.token
+            }),   //请求体
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+
+        }
+
+        fetch('http://localhost:5000/profile/upload_profile', opts)
+            .then((response) => {
+                response.json()
+            })
+            .then((responseText) => {
+                alert(responseText)
+            })
+            .catch((error) => {
+                alert(error)
+            })
     }
 
     _onAvatarPress() {
@@ -239,23 +356,27 @@ export default class IndividualPage extends Component {
                     avatar: source,
                     fromLocal: true,
                 });
-                let file;
+                let localUri;
                 if (Platform.OS === 'android') {
-                    file = response.uri
+                    localUri = response.uri
                 } else {
-                    file = response.uri.replace('file://', '')
+                    localUri = response.uri.replace('file://', '')
                 }
+                let formData = new FormData();//如果需要上传多张图片,需要遍历数组,把图片的路径数组放入formData中
+                let file = { uri: localUri, type: 'multipart/form-data', name: 'image.png' };   //这里的key(uri和type和name)不能改变,
+                formData.append("myavatar", file);
+                fetch('http://localhost:5000/profile/set_avatar', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'multipart/form-data',
+                    },
+                    body: formData,
+                })
+                    .then((response) => response.json())
+                    .then((responseData) => {
 
-
-                // this.setState({
-                //     loading:true
-                // });
-                // this.props.onFileUpload(file,response.fileName||'未命名文件.jpg')
-                // .then((result)=>{
-                //     this.setState({
-                //         loading:false
-                //     })
-                // })
+                    })
+                    .catch((error) => { console.error('error', error) });
             }
         });
     }
@@ -267,12 +388,14 @@ export default class IndividualPage extends Component {
                 this.setState({
                     nick_name: this.state.dialog_input_content
                 })
+                this._postProfile('nick_name', this.state.dialog_input_content)
                 break
             case 3://签名
                 console.log('post signature :' + this.state.dialog_input_content)
                 this.setState({
                     signature: this.state.dialog_input_content
                 })
+                this._postProfile('signature', this.state.dialog_input_content)
                 break
             case 4:  //性别
                 break
@@ -284,12 +407,9 @@ export default class IndividualPage extends Component {
                 this.setState({
                     industry: this.state.dialog_input_content
                 })
+                this._postProfile('industry', this.state.dialog_input_content)
                 break
         }
-
-    }
-
-    _postSex() {
 
     }
 
@@ -298,7 +418,7 @@ export default class IndividualPage extends Component {
         this.setState({
             sex: 'male'
         })
-        this._postSex()
+        this._postProfile('sex', '男')
     }
 
     _onPressFemale() {
@@ -306,7 +426,14 @@ export default class IndividualPage extends Component {
         this.setState({
             sex: 'female'
         })
-        this._postSex()
+        this._postProfile('sex', '女')
+    }
+
+    _onSelectBirthday(value) {
+        this.setState({
+            birthday: value
+        })
+        this._postProfile('birthday', value)
     }
 
     render() {
@@ -413,9 +540,7 @@ export default class IndividualPage extends Component {
                     unit={this.state.unit}
                     startYear={this.state.startYear}
                     onPickerConfirm={(value) => {
-                        this.setState({
-                            birthday: value
-                        })
+                        this._onSelectBirthday(value)
                     }}
                     selectedValue={['1980年', '1月', '1日']}
                     HH={false}
